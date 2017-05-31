@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment/>
+<entry key="OptPathCSV">/tmp</entry>
+<entry key="AppsPropDB_port">3306</entry>
+<entry key="OptDB_port">3306</entry>
+<entry key="OptDB_user">root</entry>
+<entry key="AppsPropDB_user">root</entry>
+<entry key="AppsPropDB_IP">localhost</entry>
+<entry key="AppsPropDB_dbName">150test</entry>
+<entry key="OptCmd">/opt/optimizer</entry>
+<entry key="OptDB_IP">localhost</entry>
+<entry key="OptDB_pass">biagio</entry>
+<entry key="AppsPropDB_pass">biagio</entry>
+<entry key="OptDB_dbName">150test</entry>
+</properties>

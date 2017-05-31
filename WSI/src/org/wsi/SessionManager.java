@@ -1,5 +1,6 @@
 package org.wsi;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,19 +27,15 @@ import javax.ws.rs.core.Response.Status;
 public class SessionManager {
 	private Map<String, Session> sessions = new HashMap<String, Session>();
 	private static final long max_seconds_keep_alive_session = 3600;
-	
-	@GET
-	@Path("/test/")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String test() {
-		return "It works!";
-	}
+	public static GlobalProperties global_properties = null; 
 	
 	@GET
 	@Path("/new/")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response startNewSession() {
 		clean_old_sessions();
+		load_properties();
+		
 		String uniqueID =  UUID.randomUUID().toString();
 		Session new_session = new Session(uniqueID);
 		sessions.put(uniqueID, new_session);
@@ -117,6 +114,22 @@ public class SessionManager {
 		
 		for (String key_to_erase : key_session_to_erase) {
 			sessions.remove(key_to_erase);
+		}
+	}
+	
+	private final static String filepath_properties = "wsi_config.xml"; 
+	private void load_properties() {
+		if (global_properties == null) {
+			global_properties = new GlobalProperties();
+			try {
+				global_properties.loadProperties(filepath_properties);
+			} catch (IOException e) {
+				try {
+					global_properties.storeProperties(filepath_properties);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
 		}
 	}
 }

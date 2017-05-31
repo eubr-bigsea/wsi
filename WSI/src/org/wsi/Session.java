@@ -69,7 +69,7 @@ public class Session {
 		return opt_results;
 	}
 	
-	private String generateCSV() throws Exception {
+	private String generateCSV() throws ClassNotFoundException, SQLException, RuntimeException {
 		ArrayList<String> rows_csv = new ArrayList<String>();
 		for (int i = 0; i < numberOfCalls; ++i) {
 			AppParams params = appsParams.get(i);

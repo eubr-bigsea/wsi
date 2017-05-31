@@ -3,22 +3,33 @@ package org.wsi;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DBQuery {
 	private final static String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-	private final static String DB_URL = "jdbc:mysql://myserver.biagiofesta.it/150test?useSSL=false";
-	private final static String USER_DB = "root";
-	private final static String PASS_DB = "biagio";
+	
+	private final static String DB_URL = "jdbc:mysql://" + SessionManager.global_properties.AppsPropDB_IP + ":" 
+					+ SessionManager.global_properties.AppsPropDB_port  + "/" + SessionManager.global_properties.AppsPropDB_dbName
+					+ "?useSSL=false";
+	
+	private final static String USER_DB = SessionManager.global_properties.AppsPropDB_user;
+	private final static String PASS_DB = SessionManager.global_properties.AppsPropDB_pass;
 	private final static String APPLICATIONS_TABLE = "APPLICATION_PROFILE_TABLE";
 	private final static String RUNNINGS_TABLE = "RUNNING_APPLICATION_TABLE";
 	
-	public queryApp get_information_from_session_id(String application_session_id) throws Exception {
+	public queryApp get_information_from_session_id(String application_session_id) 
+			throws ClassNotFoundException, RuntimeException, SQLException {
 		Class.forName(JDBC_DRIVER);
 		
-		Connection conn = DriverManager.getConnection(DB_URL, USER_DB, PASS_DB);
+		Connection conn;
+		try {
+			conn = DriverManager.getConnection(DB_URL, USER_DB, PASS_DB);
+		} catch (SQLException e) {
+			throw new SQLException(e.getMessage() + " Cannot link to URL: " + DB_URL);
+		}
 		Statement stmt = conn.createStatement();
 		String query_str = build_select_section();
 		query_str += " FROM `" + RUNNINGS_TABLE + "` JOIN `" + APPLICATIONS_TABLE + "` ON `" + RUNNINGS_TABLE + "`.`application_id` = `" 
@@ -41,7 +52,7 @@ public class DBQuery {
 			return rtn;
 		}
 		
-		throw new Exception("No application session id in the database");
+		throw new RuntimeException("No application session id in the database");
 	}
 	
 	private String build_select_section() {

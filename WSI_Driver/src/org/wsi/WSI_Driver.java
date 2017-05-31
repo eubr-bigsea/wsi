@@ -27,11 +27,6 @@ public class WSI_Driver {
 		Client client = ClientBuilder.newClient(config);
 		
 		WebTarget target = client.target(getBaseURI());
-
-		
-		// Just invoke test in order to test the system		
-		String test_response = target.path("/test/").request().accept(MediaType.TEXT_PLAIN).get(String.class).toString();
-		System.out.println(test_response);
 		
 		// Create new session
 		String token_id = target.path("/new/").request().accept(MediaType.TEXT_PLAIN).get(String.class).toString();

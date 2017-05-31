@@ -15,15 +15,16 @@ import java.util.UUID;
 
 public class OptProxy {
 	// Opt paths
-	private static final String OPT_CMD = "/opt/optimizer";
-	private static final String PathFileCSV = "/tmp";
+	private static final String OPT_CMD = SessionManager.global_properties.OptCmd;
+	private static final String PathFileCSV = SessionManager.global_properties.OptPathCSV;
 	
 	// DB configuration
-	private final static String DB_IP = "myserver.biagiofesta.it";
-	private final static String DB_NAME_DB = "150test";
-	private final static String DB_URL = "jdbc:mysql://" + DB_IP + "/" + DB_NAME_DB + "?useSSL=false";
-	private final static String USER_DB = "root";
-	private final static String PASS_DB = "biagio";
+	private final static String DB_IP = SessionManager.global_properties.OptDB_IP;
+	private final static String DB_NAME_DB = SessionManager.global_properties.OptDB_dbName;
+	private final static String DB_URL = "jdbc:mysql://" + DB_IP + ":" 
+							+ SessionManager.global_properties.OptDB_port + "/" + DB_NAME_DB + "?useSSL=false";
+	private final static String USER_DB = SessionManager.global_properties.OptDB_user;
+	private final static String PASS_DB = SessionManager.global_properties.OptDB_pass;
 	private final static String OPT_TABLENAME = "opt";
 	private final static String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 	
