@@ -1,0 +1,6 @@
+.classpath
+.project
+.settings
+WSI/target
+WSI_Driver/bin
+WSI_Driver/target
