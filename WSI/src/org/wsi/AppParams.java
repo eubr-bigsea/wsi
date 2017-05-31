@@ -3,15 +3,13 @@ package org.wsi;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
-import org.apache.el.parser.ParseException;
-
 public class AppParams {
 	private static final String delimiter_token = " ";
 	private String app_session_id;
 	private double weight;
 	private double deadline;
 	
-	public AppParams(String parsable_string) throws ParseException {
+	public AppParams(String parsable_string) throws Exception {
 		try {
 			StringTokenizer st = new StringTokenizer(parsable_string);
 			String app_session_id = st.nextToken(delimiter_token);
@@ -22,7 +20,7 @@ public class AppParams {
 			this.weight = Double.parseDouble(weight_str);
 			this.deadline = Double.parseDouble(deadline_str);
 		} catch (NoSuchElementException err) {
-			throw new ParseException("Impossible to parse the app parameters");
+			throw new Exception("Impossible to parse the app parameters");
 		}
 	}
 
