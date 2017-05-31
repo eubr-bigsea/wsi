@@ -60,13 +60,18 @@ public class SessionManager {
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response setCalls(
 			@DefaultValue("none") @QueryParam("SID") String sessionToken,
-			@DefaultValue("0") @QueryParam("ncalls") int numberOfCalls) {
+			@DefaultValue("-1") @QueryParam("ncalls") int numberOfCalls,
+			@DefaultValue("-1") @QueryParam("ncores") int numberOfCores) {
 		Session session = sessions.get(sessionToken);
 		if (session == null) {
 			return Response.status(Status.UNAUTHORIZED).entity("Error. Token not identified").build();
 		}
+		if (numberOfCalls == -1 || numberOfCores == -1) {
+			return Response.status(Status.BAD_REQUEST).entity("Error. Parameters not properly configured").build();
+		}
 		session.setNumberOfCalls(numberOfCalls);
-		return Response.status(Status.OK).entity("OK. Number has been set").build();
+		session.setNumberOfCoresAvail(numberOfCores);
+		return Response.status(Status.OK).entity("OK. Numbers have been set").build();
 	}
 	
 	@POST
@@ -87,9 +92,9 @@ public class SessionManager {
 				return Response.status(Status.OK).entity("OK. AppParams have been set. " + 
 						String.valueOf(remain_calls) + " remain to set").build();
 			} else {
-				String out_csv = session.generateCSV();
+				String opt_results = session.getOptResults();
 				sessions.remove(session);
-				return Response.status(Status.OK).entity(out_csv).build();
+				return Response.status(Status.OK).entity(opt_results).build();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

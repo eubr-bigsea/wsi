@@ -40,6 +40,7 @@ public class WSI_Driver {
 		// Set the number of async calls
 		Response response_set = target.path("/setcalls/").queryParam("SID", token_id)
 				.queryParam("ncalls", String.valueOf(number_of_calls))
+				.queryParam("ncores", "2")
 				.request().accept(MediaType.TEXT_PLAIN).post(null);
 		
 		if (response_set.getStatus() == Status.OK.getStatusCode()) {
