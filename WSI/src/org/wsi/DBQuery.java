@@ -3,14 +3,13 @@ package org.wsi;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DBQuery {
-	private final static String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	private final static String DB_URL = "jdbc:mysql://myserver.biagiofesta.it/150test";
+	private final static String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+	private final static String DB_URL = "jdbc:mysql://myserver.biagiofesta.it/150test?useSSL=false";
 	private final static String USER_DB = "root";
 	private final static String PASS_DB = "biagio";
 	private final static String APPLICATIONS_TABLE = "APPLICATION_PROFILE_TABLE";
@@ -45,7 +44,7 @@ public class DBQuery {
 		throw new Exception("No application session id in the database");
 	}
 	
-	public String build_select_section() {
+	private String build_select_section() {
 		List<String> cols_sel = new ArrayList<String>();
 		cols_sel.add("application_id");
 		cols_sel.add("chi_0");
