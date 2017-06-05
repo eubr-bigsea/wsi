@@ -44,64 +44,23 @@ public class GlobalProperties {
 	}
 	
 	public void loadProperties(String filepath) 
-			throws InvalidPropertiesFormatException, FileNotFoundException, IOException, RuntimeException {
+			throws InvalidPropertiesFormatException, FileNotFoundException, IOException {
 		Properties global_properties = new Properties();
 		global_properties.loadFromXML(new FileInputStream(filepath));
 		
 		AppsPropDB_IP = global_properties.getProperty("AppsPropDB_IP");
-		if (AppsPropDB_IP == null) {
-			throw new RuntimeException("The property 'AppsPropDB_IP' cannot be found in the config file");
-		}
-		
 		AppsPropDB_port = global_properties.getProperty("AppsPropDB_port");
-		if (AppsPropDB_port == null) {
-			throw new RuntimeException("The property 'AppsPropDB_port' cannot be found in the config file");
-		}
-		
-		AppsPropDB_dbName = global_properties.getProperty("AppsPropDB_dbName");
-		if (AppsPropDB_dbName == null) {
-			throw new RuntimeException("The property 'AppsPropDB_dbName' cannot be found in the config file");
-		}
-		
+		AppsPropDB_dbName = global_properties.getProperty("AppsPropDB_dbName");	
 		AppsPropDB_user = global_properties.getProperty("AppsPropDB_user");
-		if (AppsPropDB_user == null) {
-			throw new RuntimeException("The property 'AppsPropDB_user' cannot be found in the config file");
-		}
-		
 		AppsPropDB_pass = global_properties.getProperty("AppsPropDB_pass");
-		if (AppsPropDB_pass == null) {
-			throw new RuntimeException("The property 'AppsPropDB_pass' cannot be found in the config file");
-		}
 
 		OtherConfigFile = global_properties.getProperty("OtherConfigFile");
-		if (OtherConfigFile == null) {
-			throw new RuntimeException("The property 'OtherConfigFile' cannot be found in the config file");
-		}
 		
-		OptDB_IP = global_properties.getProperty("OptDB_IP");
-		if (OptDB_IP == null) {
-			throw new RuntimeException("The property 'OptDB_IP' cannot be found in the config file");
-		}
-		
-		OptDB_port = global_properties.getProperty("OptDB_port");
-		if (OptDB_port == null) {
-			throw new RuntimeException("The property 'OptDB_port' cannot be found in the config file");
-		}
-		
+		OptDB_IP = global_properties.getProperty("OptDB_IP");	
+		OptDB_port = global_properties.getProperty("OptDB_port");	
 		OptDB_dbName = global_properties.getProperty("OptDB_dbName");
-		if (OptDB_dbName == null) {
-			throw new RuntimeException("The property 'OptDB_dbName' cannot be found in the config file");
-		}
-		
 		OptDB_user = global_properties.getProperty("OptDB_user");
-		if (OptDB_user == null) {
-			throw new RuntimeException("The property 'OptDB_user' cannot be found in the config file");
-		}
-		
 		OptDB_pass = global_properties.getProperty("OptDB_pass");
-		if (OptDB_pass == null) {
-			throw new RuntimeException("The property 'OptDB_pass' cannot be found in the config file");
-		}
 	}
 
 	public String getOptCmd() throws IOException, RuntimeException {
@@ -113,6 +72,9 @@ public class GlobalProperties {
 	}
 	
 	private String getPropertyInOtherConfigFile(String key_property) throws IOException, RuntimeException {
+		if (OtherConfigFile == null) {
+			throw new RuntimeException("The other configuration file has not been set");
+		}
 		File otherconfigfile = new File(OtherConfigFile);
 		BufferedReader file_reader = new BufferedReader(new FileReader(otherconfigfile));
 		boolean row_found = false;
