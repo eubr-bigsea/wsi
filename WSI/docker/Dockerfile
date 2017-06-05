@@ -28,7 +28,8 @@ RUN cd /tarball && \
     cp target/WSI-${WSI_VERSION}.war /opt/apache-tomcat-${TOMCAT_VERSION}/webapps/WSI.war
 
 ENV WSI_USER wsi
-ENV WSI_CONFIG_FILE /home/${WSI_USER}/wsi_config.xml
+ENV WSI_HOME /home/${WSI_USER}
+ENV WSI_CONFIG_FILE ${WSI_HOME}/wsi_config.xml
 
 RUN useradd -ms /bin/bash ${WSI_USER} && \
     chown -R ${WSI_USER}:${WSI_USER} /opt/apache-tomcat-${TOMCAT_VERSION}

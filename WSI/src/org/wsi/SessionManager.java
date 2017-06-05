@@ -25,6 +25,8 @@ import javax.ws.rs.core.Response.Status;
 @Path("/session/")
 @Singleton
 public class SessionManager {
+	private final static String filepath_properties_default = getHomeDirectory() + "/wsi_config.xml";
+	private final static String filepath_properties =  getConfigurationFileName();
 	private Map<String, Session> sessions = new HashMap<String, Session>();
 	private static final long max_seconds_keep_alive_session = 3600;
 	public static GlobalProperties global_properties = null; 
@@ -118,7 +120,6 @@ public class SessionManager {
 		}
 	}
 	
-	private final static String filepath_properties = "wsi_config.xml"; 
 	private void load_properties() {
 		if (global_properties == null) {
 			global_properties = new GlobalProperties();
@@ -126,11 +127,28 @@ public class SessionManager {
 				global_properties.loadProperties(filepath_properties);
 			} catch (IOException e) {
 				try {
+					System.out.println("Saved default configuration file in '" + filepath_properties + "'");
 					global_properties.storeProperties(filepath_properties);
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 			}
 		}
+	}
+	
+	private static String getConfigurationFileName() {
+		String conf_from_env = System.getenv("WSI_CONFIG_FILE");
+		if (conf_from_env.isEmpty() == false) {
+			return conf_from_env;
+		}
+		return filepath_properties_default;
+	}
+	
+	private static String getHomeDirectory() {
+		String home_wsi = System.getenv("WSI_HOME");
+		if (home_wsi.isEmpty() == false) {
+			return home_wsi;
+		}
+		return System.getenv("HOME");
 	}
 }
