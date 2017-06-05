@@ -14,10 +14,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class OptProxy {
-	// Opt paths
-	private static final String OPT_CMD = SessionManager.global_properties.OptCmd;
-	private static final String PathFileCSV = SessionManager.global_properties.OptPathCSV;
-	
 	// DB configuration
 	private final static String DB_IP = SessionManager.global_properties.OptDB_IP;
 	private final static String DB_NAME_DB = SessionManager.global_properties.OptDB_dbName;
@@ -30,6 +26,9 @@ public class OptProxy {
 	
 	public String invoke_opt(String csv_input, String num_avil_cores) 
 			throws IOException, InterruptedException, ClassNotFoundException, SQLException, RuntimeException {
+		final String OPT_CMD = SessionManager.global_properties.getOptCmd();
+		final String PathFileCSV = SessionManager.global_properties.getCSVPath();
+			
 		String filename = UUID.randomUUID().toString() + ".csv";
 		String filepath =  PathFileCSV + "/" + filename;
 		
