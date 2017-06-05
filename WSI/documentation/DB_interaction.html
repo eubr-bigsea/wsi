@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <title>WSI Documentation - DB Interaction</title>
+  </head>
+  <body>
+    <div>
+      <h2>WSI - Database Interaction</h2>
+      <p>
+        The Web Service interacts with two different databases.<br>
+        One database contains the application informations;
+        the other, instead, is used by the optimizer to store its execution results.<br>
+      </p>
+    </div>
+
+    <div>
+      <h3>Applications Database</h3>
+      <p>
+        The web service expects there are two table in this database:
+        <ul>
+          <li>APPLICATION_PROFILE_TABLE</li>
+          <li>RUNNING_APPLICATION_TABLE</li>
+        </ul>
+
+        Once all applications have set its parameters, the web service will query the database.
+        Indeed, from the <em>application session_id</em> it will be possible to obtain
+        the <em>appication_id</em> in the table <em>RUNNING_APPLICATION_TABLE</em>
+        and all other informations from the table <em>APPLICATION_PROFILE_TABLE</em>.
+      </p>
+
+      <p>
+        The query used will be in the following form:
+        
+        <xmp>
+SELECT `APPLICATION_PROFILE_TABLE`.`application_id`,
+       `APPLICATION_PROFILE_TABLE`.`chi_0`,
+       `APPLICATION_PROFILE_TABLE`.`chi_c`,
+       `APPLICATION_PROFILE_TABLE`.`phi_mem`,
+       `APPLICATION_PROFILE_TABLE`.`vir_mem`,
+       `APPLICATION_PROFILE_TABLE`.`phi_core`,
+       `APPLICATION_PROFILE_TABLE`.`vir_core`
+  FROM `RUNNING_APPLICATION_TABLE` JOIN `APPLICATION_PROFILE_TABLE`
+  ON `RUNNING_APPLICATION_TABLE`.`application_id` = `APPLICATION_PROFILE_TABLE`.`application_id`
+  WHERE `application_session_id` = "APPLICATION_SESSION_ID";
+        </xmp>
+      </p>
+    </div>
+
+    <div>
+      <h3>Optimizer Database</h3>
+      <p>
+        The web service expects a table in this database:
+        <ul>
+          <li>opt</li>
+        </ul>
+
+        The query will be in the following form:
+        <xmp>
+SELECT nu
+  FROM `opt`
+  WHERE opt_id = "CSV_FILENAME" AND app_id = "APP_ID";
+        </xmp>
+      </p>
+    </div>
+    
+  </body>
+</html>
