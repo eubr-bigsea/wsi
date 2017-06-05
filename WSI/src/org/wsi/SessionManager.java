@@ -138,7 +138,7 @@ public class SessionManager {
 	
 	private static String getConfigurationFileName() {
 		String conf_from_env = System.getenv("WSI_CONFIG_FILE");
-		if (conf_from_env.isEmpty() == false) {
+		if (conf_from_env != null) {
 			return conf_from_env;
 		}
 		return filepath_properties_default;
@@ -146,7 +146,7 @@ public class SessionManager {
 	
 	private static String getHomeDirectory() {
 		String home_wsi = System.getenv("WSI_HOME");
-		if (home_wsi.isEmpty() == false) {
+		if (home_wsi != null) {
 			return home_wsi;
 		}
 		return System.getenv("HOME");
