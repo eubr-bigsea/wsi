@@ -17,6 +17,9 @@ INSERT INTO `RUNNING_APPLICATION_TABLE` (
   `application_session_id`,
   `application_id`,
   `dataset_size`,
-  `submission_time`) VALUES ('application_1483347394756_0', 'query44', 123, CURRENT_TIMESTAMP),
-                            ('application_1483347394756_1', 'query44', 123, CURRENT_TIMESTAMP),
-                            ('application_1483347394756_2', 'query44', 123, CURRENT_TIMESTAMP);
+  `submission_time`,
+  `status`,
+  `ending_time`)
+    VALUES ('application_1483347394756_0', 'query44', 123, CURRENT_TIMESTAMP, 'RUNNING', 0),
+           ('application_1483347394756_1', 'query44', 123, CURRENT_TIMESTAMP, 'RUNNING', 0),
+           ('application_1483347394756_2', 'query44', 123, CURRENT_TIMESTAMP, 'RUNNING', 0);

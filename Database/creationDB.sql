@@ -26,6 +26,8 @@ CREATE TABLE `RUNNING_APPLICATION_TABLE` (
   `application_id` VARCHAR(100) NOT NULL,
   `dataset_size` DOUBLE NOT NULL,
   `submission_time` TIMESTAMP NOT NULL,
+  `status` VARCHAR(100) NOT NULL,
+  `ending_time` TIMESTAMP,
   PRIMARY KEY (`application_session_id`),
   FOREIGN KEY (`application_id`) REFERENCES `APPLICATION_PROFILE_TABLE`(`application_id`)
 );
