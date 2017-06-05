@@ -33,10 +33,10 @@ ENV WSI_CONFIG_FILE /home/${WSI_USER}/wsi_config.xml
 RUN useradd -ms /bin/bash ${WSI_USER} && \
     chown -R ${WSI_USER}:${WSI_USER} /opt/apache-tomcat-${TOMCAT_VERSION}
 
-RUN cp /tarball/wsi_polimi/WSI/config_example/wsi_config.xml ${WSI_CONFIG_FILE}
-
 USER ${WSI_USER}
 WORKDIR /home/wsi
+
+RUN cp /tarball/wsi_polimi/WSI/config_example/wsi_config.xml ${WSI_CONFIG_FILE}
 
 EXPOSE 8080
 
