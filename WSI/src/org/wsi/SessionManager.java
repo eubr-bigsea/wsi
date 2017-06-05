@@ -90,12 +90,13 @@ public class SessionManager {
 						String.valueOf(remain_calls) + " remain to set").build();
 			} else {
 				String opt_results = session.getOptResults();
-				sessions.remove(session);
+				sessions.remove(sessionToken);
 				return Response.status(Status.OK).entity(opt_results).build();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Response.status(Status.BAD_REQUEST).entity("Error. " + e.getMessage()).build();
+			sessions.remove(sessionToken);
+			return Response.status(Status.BAD_REQUEST).entity("Error. " + e.getMessage() + "\nThe session will be destroyed").build();
 		}
 	}
 	

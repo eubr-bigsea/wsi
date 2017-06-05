@@ -52,7 +52,7 @@ public class DBQuery {
 			return rtn;
 		}
 		
-		throw new RuntimeException("No application session id in the database");
+		throw new RuntimeException("No application session id '" + application_session_id + "' in the database");
 	}
 	
 	private String build_select_section() {
