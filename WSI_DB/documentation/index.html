@@ -95,62 +95,6 @@
         </table>
       </div>
 
-      <div class="api-example">
-        <h3>API usage example</h3>
-        <p>
-          
-          Get a new session:<br>
-          
-          <code>
-curl http://localhost:8080/WSI/session/new
-          </code>
-        </p>
-
-        <p>
-          It returns a unique session identifier, for example:<br>
-          
-          <code>
-88421905-bdff-4ae3-b325-90b74e9e4974
-          </code>
-        </p>
-
-        <p>
-          Now the number of calls and available cores should be set. For example with the same session ID,
-          we set the number of calls and cores to 2:<br>
-          <code>
-curl -X POST "http://localhost:8080/WSI/session/setcalls?SID=88421905-bdff-4ae3-b325-90b74e9e4974&ncalls=2&ncores=2"
-          </code>
-        </p>
-
-        <p>
-          The server should answer with a positive message:<br>
-          <code>
-OK. Numbers have been set
-          </code>
-        </p>
-
-        <p>
-          Since we have just set 2 calls, the server will expect exactly 2 calls for set parameters.
-        </p>
-
-        <p>
-          The first setting may be something like:<br>
-          <code>
-curl -X POST -H "Content-Type: text/plain" -d 'APP-SESSION-ID1 3.14 3.14' "http://localhost:8080/WSI/session/setparams?SID=88421905-bdff-4ae3-b325-90b74e9e4974"
-          </code>
-        </p>
-
-        <p>
-          If there is no error, the server should answer:<br>
-          <code>
-OK. AppParams have been set. 1 remain to set
-          </code>
-        </p>
-
-        <p>
-          The last call, instead, will return the optimizer results.
-        </p>
-      </div>
     </div>
   </body>
 </html>
