@@ -2,7 +2,7 @@
 *WSI* is a Web Service Application which implements a 
 [RESTFul](https://en.wikipedia.org/wiki/Representational_state_transfer) API.
 
-Those services are a process's part of the [Bigset Project](http://www.eubra-bigsea.eu/).
+Those services are a process's part of the [Bigsea Project](http://www.eubra-bigsea.eu/).
 
 ## Building From Docker
 
