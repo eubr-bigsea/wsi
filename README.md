@@ -12,10 +12,10 @@ From the repository root directory, launch:
 
 ~~~
 cd WSI/docker
-docker build --no-cache --force-rm -t WSI .
+docker build --no-cache --force-rm -t wsi .
 ~~~
 
-This will build a docker image tagged as `WSI`.
+This will build a docker image tagged as `wsi`.
 *Be patient, the building process could take several minutes.*
 
 Once the images has been built, the WebService can be launched in a docker container.
@@ -26,7 +26,7 @@ From the repository root directory, launch:
 ~~~
 cd WSI/
 export WSI_SERVICE_PORT=8080
-docker run --name WSI_service -d -v ${PWD}/config_example/wsi_config.xml:/home/wsi/wsi_config.xml -p ${WSI_SERVICE_PORT}:8080 WSI
+docker run --name wsi_service -d -v ${PWD}/config_example/wsi_config.xml:/home/wsi/wsi_config.xml -p ${WSI_SERVICE_PORT}:8080 wsi
 ~~~
 
 where the enviroment variable `WSI_SERVICE_PORT` is the port where tomcat will listen to.
@@ -37,4 +37,25 @@ The options:
  in the container.
  * `-p` allows the binding of the port.
  * `--name` sets the name of docker container.
+ 
+### Useful Commands and Informations
+#### Restart Application
+Since the configuration file is read only at the application's startup, when it is changed the application
+needs to be restarted.
+
+In order to restart the docker container, just launch:
+
+~~~
+docker restart wsi_service
+~~~
+
+#### Configuration File
+By default, the configuration file in the container is located in:
+~~~
+/home/wsi/wsi_config.xml
+~~~
+
+
+
+
  
