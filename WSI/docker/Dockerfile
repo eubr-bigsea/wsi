@@ -1,16 +1,25 @@
+# Copyright 2017 <Biagio Festa>
 FROM ubuntu:16.04
 MAINTAINER biagio.festa[at]gmail.com
 
 ENV WSI_REPOSITORY https://github.com/BiagioFesta/wsi_polimi.git
+ENV OPTIMIZE_REPOSITORY https://github.com/eubr-bigsea/opt_jr
 ENV WSI_VERSION 0.0.1-SNAPSHOT
 ENV TOMCAT_VERSION_MAJOR 7
 ENV TOMCAT_VERSION 7.0.78
 ENV TOMCAT_REPO http://apache.panu.it/tomcat/
 ENV CATALINA_HOME /opt/apache-tomcat-${TOMCAT_VERSION}
 ENV PATH $CATALINA_HOME/bin:$PATH
+ENV WSI_USER wsi
+ENV WSI_HOME /home/${WSI_USER}
+ENV WSI_CONFIG_FILE ${WSI_HOME}/wsi_config.xml
+ENV OPTIMIZE_HOME /opt/optimize
+ENV OPTIMIZE_CMD ${OPTIMIZE_HOME}/optimize
 
-RUN apt-get update && apt-get install -y git maven openjdk-8-jdk wget
+# Install environment dependencies
+RUN apt-get update && apt-get install -y git maven openjdk-8-jdk wget make gcc libmysqlclient-dev
 
+# Install tomcat in ${CATALINA_HOME}
 RUN mkdir /tarball && \
     cd /tarball && \
     wget ${TOMCAT_REPO}/tomcat-${TOMCAT_VERSION_MAJOR}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz && \
@@ -19,6 +28,7 @@ RUN mkdir /tarball && \
     mv apache-tomcat-${TOMCAT_VERSION}/* ${CATALINA_HOME} && \
     rmdir apache-tomcat-${TOMCAT_VERSION}
 
+# Download and install the web service application (deploy on tomcat)
 RUN cd /tarball && \
     git clone ${WSI_REPOSITORY} && \
     cd wsi_polimi/WSI && \
@@ -27,19 +37,27 @@ RUN cd /tarball && \
     mvn package && \
     cp target/WSI-${WSI_VERSION}.war /opt/apache-tomcat-${TOMCAT_VERSION}/webapps/WSI.war
 
-ENV WSI_USER wsi
-ENV WSI_HOME /home/${WSI_USER}
-ENV WSI_CONFIG_FILE ${WSI_HOME}/wsi_config.xml
-
+# Create user ${WSI_USER} and give him privileges on ${CATALINA_HOME} (tomcat install directory)
 RUN useradd -ms /bin/bash ${WSI_USER} && \
-    chown -R ${WSI_USER}:${WSI_USER} /opt/apache-tomcat-${TOMCAT_VERSION}
+    chown -R ${WSI_USER}:${WSI_USER} ${CATALINA_HOME}
 
+# Download and install optmizer
+RUN cd /tarball && \
+    git clone ${OPTIMIZE_REPOSITORY} && \
+    cd opt_jr && \
+    make && \
+    install -D -o ${WSI_USER} -g ${WSI_USER} optimize ${OPTIMIZE_CMD}
+
+# Go on user
 USER ${WSI_USER}
-WORKDIR /home/wsi
+WORKDIR ${WSI_HOME}
 
-RUN cp /tarball/wsi_polimi/WSI/config_example/wsi_config.xml ${WSI_CONFIG_FILE}
+# Copy the default configuration file Create directory for upload
+RUN cp /tarball/wsi_polimi/WSI/config_example/wsi_config.xml ${WSI_CONFIG_FILE} && \
+    mkdir ${WSI_HOME}/Uploaded
 
 EXPOSE 8080
 
+# Default command launch tomcat
 CMD ["catalina.sh", "run"]
     
