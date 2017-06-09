@@ -21,13 +21,13 @@ public class OptProxy {
 							+ SessionManager.global_properties.OptDB_port + "/" + DB_NAME_DB + "?useSSL=false";
 	private final static String USER_DB = SessionManager.global_properties.OptDB_user;
 	private final static String PASS_DB = SessionManager.global_properties.OptDB_pass;
-	private final static String OPT_TABLENAME = "opt";
+	private final static String OPT_TABLENAME = SessionManager.global_properties.OptDB_tablename;
 	private final static String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 	
 	public String invoke_opt(String csv_input, String num_avil_cores) 
 			throws IOException, InterruptedException, ClassNotFoundException, SQLException, RuntimeException {
-		final String OPT_CMD = SessionManager.global_properties.getOptCmd();
-		final String PathFileCSV = SessionManager.global_properties.getCSVPath();
+		final String OPT_CMD = SessionManager.global_properties.OPTIMIZE_HOME;
+		final String PathFileCSV = SessionManager.global_properties.UPLOAD_HOME;
 			
 		String filename = UUID.randomUUID().toString() + ".csv";
 		String filepath =  PathFileCSV + "/" + filename;
@@ -62,6 +62,10 @@ public class OptProxy {
 		// Wait for termination of opt
 		int return_status = opt_process.waitFor();
 		System.out.println("Return status of process: '" + return_status + "'");
+		if (return_status != 0) {
+			throw new RuntimeException("The optimizer '" + cmd_to_exec + "' has been terminated with error. "
+					+ "Status: " + String.valueOf(return_status));
+		}
 		
 		// Now read opt results from table in database
 		String opt_results = query_resuls_opt(filename, appIDs_invoved);

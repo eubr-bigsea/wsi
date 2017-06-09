@@ -1,11 +1,8 @@
 package org.wsi;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
@@ -17,12 +14,19 @@ public class GlobalProperties {
 	public String AppsPropDB_user = "root";
 	public String AppsPropDB_pass = "biagio";
 	
-	public String OtherConfigFile = "~/.ws_properties";
 	public String OptDB_IP = "localhost";
 	public String OptDB_port = "3306";
 	public String OptDB_dbName = "150test";
+	public String OptDB_tablename = "OPT_SESSIONS_RESULTS";
 	public String OptDB_user = "root";
 	public String OptDB_pass = "biagio";
+	
+	public String DAGSIM_HOME = "/home/work/Dagsim";
+	public String RESULTS_HOME = "/home/work/TPCDS500-D_processed_logs";
+	public String OPTIMIZE_HOME = "/home/work/Optimize/optimize";
+	public String RESOPT_HOME = "/home/work/ResOpt";
+	public String LUNDSTROM_HOME = "/home/work/spark-lundstrom-master";
+	public String UPLOAD_HOME = "/home/work/Uploaded";
 	
 	public void storeProperties(String filepath) throws FileNotFoundException, IOException {
 		Properties global_properties = new Properties();
@@ -33,12 +37,19 @@ public class GlobalProperties {
 		global_properties.setProperty("AppsPropDB_user", AppsPropDB_user);
 		global_properties.setProperty("AppsPropDB_pass", AppsPropDB_pass);
 		
-		global_properties.setProperty("OtherConfigFile", OtherConfigFile);
 		global_properties.setProperty("OptDB_IP", OptDB_IP);
 		global_properties.setProperty("OptDB_port", OptDB_port);
 		global_properties.setProperty("OptDB_dbName", OptDB_dbName);
+		global_properties.setProperty("OptDB_tablename", OptDB_tablename);
 		global_properties.setProperty("OptDB_user", OptDB_user);
 		global_properties.setProperty("OptDB_pass", OptDB_pass);
+		
+		global_properties.setProperty("DAGSIM_HOME", DAGSIM_HOME);
+		global_properties.setProperty("RESULTS_HOME", RESULTS_HOME);
+		global_properties.setProperty("OPTIMIZE_HOME", OPTIMIZE_HOME);
+		global_properties.setProperty("RESOPT_HOME", RESOPT_HOME);
+		global_properties.setProperty("LUNDSTROM_HOME", LUNDSTROM_HOME);
+		global_properties.setProperty("UPLOAD_HOME", UPLOAD_HOME);
 		
 		global_properties.storeToXML(new FileOutputStream(filepath), "");
 	}
@@ -53,48 +64,19 @@ public class GlobalProperties {
 		AppsPropDB_dbName = global_properties.getProperty("AppsPropDB_dbName");	
 		AppsPropDB_user = global_properties.getProperty("AppsPropDB_user");
 		AppsPropDB_pass = global_properties.getProperty("AppsPropDB_pass");
-
-		OtherConfigFile = global_properties.getProperty("OtherConfigFile");
 		
 		OptDB_IP = global_properties.getProperty("OptDB_IP");	
 		OptDB_port = global_properties.getProperty("OptDB_port");	
 		OptDB_dbName = global_properties.getProperty("OptDB_dbName");
+		OptDB_tablename = global_properties.getProperty("OptDB_tablename");
 		OptDB_user = global_properties.getProperty("OptDB_user");
 		OptDB_pass = global_properties.getProperty("OptDB_pass");
-	}
-
-	public String getOptCmd() throws IOException, RuntimeException {
-		return getPropertyInOtherConfigFile("OPTIMIZE_HOME");
-	}
-	
-	public String getCSVPath() throws IOException, RuntimeException {
-		return getPropertyInOtherConfigFile("UPLOAD_HOME");
-	}
-	
-	private String getPropertyInOtherConfigFile(String key_property) throws IOException, RuntimeException {
-		if (OtherConfigFile == null) {
-			throw new RuntimeException("The other configuration file has not been set");
-		}
-		File otherconfigfile = new File(OtherConfigFile);
-		BufferedReader file_reader = new BufferedReader(new FileReader(otherconfigfile));
-		boolean row_found = false;
 		
-		String current_line;
-		String property_value = "";
-		while ((current_line = file_reader.readLine()) != null && row_found == false) {
-			int finder = current_line.indexOf(key_property);
-			if (finder != -1) {
-				property_value = key_property.substring(finder + key_property.length() + 1);
-				row_found = true;
-			}
-		}
-		file_reader.close();
-		
-		if (row_found == false) {
-			throw new RuntimeException("The property '" + key_property + "' "
-					+ "cannot be found in the configuration file '" + OtherConfigFile + "'");
-		}
-		
-		return property_value;
+		DAGSIM_HOME = global_properties.getProperty("DAGSIM_HOME");
+		RESULTS_HOME = global_properties.getProperty("RESULTS_HOME");
+		OPTIMIZE_HOME = global_properties.getProperty("OPTIMIZE_HOME");
+		RESOPT_HOME = global_properties.getProperty("RESOPT_HOME");
+		LUNDSTROM_HOME = global_properties.getProperty("LUNDSTROM_HOME");
+		UPLOAD_HOME = global_properties.getProperty("UPLOAD_HOME");
 	}
 }

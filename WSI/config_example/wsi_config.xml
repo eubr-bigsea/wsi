@@ -2,14 +2,20 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment/>
+<entry key="RESOPT_HOME">/home/work/ResOpt</entry>
+<entry key="RESULTS_HOME">/home/work/TPCDS500-D_processed_logs</entry>
 <entry key="AppsPropDB_port">3306</entry>
 <entry key="OptDB_port">3306</entry>
+<entry key="DAGSIM_HOME">/home/work/Dagsim</entry>
+<entry key="LUNDSTROM_HOME">/home/work/spark-lundstrom-master</entry>
+<entry key="OPTIMIZE_HOME">/home/work/Optimize/optimize</entry>
 <entry key="OptDB_user">root</entry>
 <entry key="AppsPropDB_user">root</entry>
 <entry key="AppsPropDB_IP">myserver.biagiofesta.it</entry>
-<entry key="OtherConfigFile">~/.ws_properties</entry>
 <entry key="AppsPropDB_dbName">150test</entry>
-<entry key="OptDB_IP">localhost</entry>
+<entry key="OptDB_tablename">OPT_SESSIONS_RESULTS</entry>
+<entry key="OptDB_IP">myserver.biagiofesta.it</entry>
+<entry key="UPLOAD_HOME">/home/work/Uploaded</entry>
 <entry key="OptDB_pass">biagio</entry>
 <entry key="AppsPropDB_pass">biagio</entry>
 <entry key="OptDB_dbName">150test</entry>
