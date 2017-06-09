@@ -110,7 +110,7 @@ public class OptProxy {
 			String nu_string = result.getString(1);
 			
 			// Append the 'nu' value to the returned string
-			return_values += nu_string + "\n";
+			return_values += (return_values.length() != 0 ? "\n" : "") + nu_string;
 		}
 		
 		return return_values;
