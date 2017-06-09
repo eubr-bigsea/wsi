@@ -12,7 +12,7 @@ INSERT INTO `APPLICATION_PROFILE_TABLE` (
   `vir_core`,
   `chi_0`,
   `chi_c`) VALUES ('query44', 123, 123, 123, 123, 123, 123, 123),
-                  ('query45', 123, 123, 123, 123, 123, 123, 123)
+                  ('query45', 123, 123, 123, 123, 123, 123, 123),
                   ('query46', 123, 123, 123, 123, 123, 123, 123);
 
 INSERT INTO `RUNNING_APPLICATION_TABLE` (
