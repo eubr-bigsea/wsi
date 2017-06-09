@@ -19,7 +19,7 @@ echo ""
 
 # Set app param for each app
 for app in ${APP_IDS[@]}; do
-    echo "Settting application: ${app}";
+    echo "Setting application: ${app}";
     curl -X POST -H "Content-Type: text/plain" -d "${app} 3.14 3.14" "http://${WSI_IP}:${WSI_PORT}/WSI/session/setparams?SID=${SID}"
     echo ""
 done;
