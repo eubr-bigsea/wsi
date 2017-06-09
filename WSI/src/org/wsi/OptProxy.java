@@ -94,9 +94,16 @@ public class OptProxy {
 			// Execute query
 			ResultSet result = stmt.executeQuery(query);
 			
+			// Retrieve number of results
+			boolean no_rows = result.last();
+			int number_of_rows = result.getRow();
+			result.beforeFirst();
+						
 			// Fetch result
-			if (result.getFetchSize() != 1) {
-				throw new RuntimeException("The number of results is '" + result.getFetchSize() + "' and should be 1");
+			if (no_rows == true || number_of_rows != 1) {
+				throw new RuntimeException("The number of results is '" + number_of_rows + "' and should be 1.\n"
+						+ "No rows: " + String.valueOf(no_rows) + "\n"
+						+ "The query were '" + query + "'");
 			} else {
 				result.next();
 			}
