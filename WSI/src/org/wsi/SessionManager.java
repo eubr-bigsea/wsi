@@ -21,6 +21,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
+
 
 @Path("/session/")
 @Singleton
@@ -98,7 +100,11 @@ public class SessionManager {
 		} catch (Exception e) {
 			e.printStackTrace();
 			sessions.remove(sessionToken);
-			return Response.status(Status.BAD_REQUEST).entity("Error. " + e.getMessage() + "\nThe session will be destroyed").build();
+			String stack_trace = ExceptionUtils.getStackTrace(e);
+			String error_message = "Error. " + e.getMessage() + "\n"
+					+ "The session will be destroyed\n\n"
+					+ stack_trace;
+			return Response.status(Status.BAD_REQUEST).entity(error_message).build();
 		}
 	}
 	
