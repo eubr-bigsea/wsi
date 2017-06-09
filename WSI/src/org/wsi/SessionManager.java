@@ -53,7 +53,7 @@ public class SessionManager {
 		if (info_type.compareToIgnoreCase("numberofsessions") == 0) {
 			return Response.ok().status(Status.OK).entity(String.valueOf(sessions.size())).build();
 		}
-		return Response.ok().status(Status.OK).entity("Error.No information to display").build();
+		return Response.ok().status(Status.OK).entity("Error. No information to display").build();
 	}
 	
 	@POST
