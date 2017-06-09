@@ -95,7 +95,7 @@ public class OptProxy {
 			ResultSet result = stmt.executeQuery(query);
 			
 			// Retrieve number of results
-			boolean no_rows = result.last();
+			boolean no_rows = !result.last();
 			int number_of_rows = result.getRow();
 			result.beforeFirst();
 						
@@ -107,7 +107,7 @@ public class OptProxy {
 			} else {
 				result.next();
 			}
-			String nu_string = result.getString(0);
+			String nu_string = result.getString(1);
 			
 			// Append the 'nu' value to the returned string
 			return_values += nu_string + "\n";
