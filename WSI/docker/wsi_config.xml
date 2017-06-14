@@ -3,7 +3,7 @@
 <properties>
 <comment/>
 <entry key="RESOPT_HOME">/home/work/ResOpt</entry>
-<entry key="RESULTS_HOME">/home/wsi/datas</entry>
+<entry key="RESULTS_HOME">/home/work/TPCDS500-D_processed_logs</entry>
 <entry key="AppsPropDB_port">3306</entry>
 <entry key="OptDB_port">3306</entry>
 <entry key="DAGSIM_HOME">/opt/dagSim</entry>
