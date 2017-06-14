@@ -21,7 +21,7 @@ ENV DAGSIM_HOME /opt/dagSim
 ENV LUNDSTROM_REPOSITORY https://github.com/eubr-bigsea/lundstrom
 ENV LUNDSTROM_HOME /opt/lundstrom
 ENV WS_LUNDSTROM_REPOSITORY https://github.com/eubr-bigsea/lundstrom-ws
-ENV WS_DAGSIM_DATA /home/wsi/datas
+ENV WS_DAGSIM_DATA /home/work/TPCDS500-D_processed_logs
 
 # Install environment dependencies
 RUN apt-get update && apt-get install -y git maven openjdk-8-jdk wget make gcc libmysqlclient-dev liblua5.3-dev python2.7
@@ -81,6 +81,10 @@ RUN cd /tarball && \
     mvn package && \
     install -D -o ${WSI_USER} -g ${WSI_USER} target/bigsea.war /opt/apache-tomcat-${TOMCAT_VERSION}/webapps/bigsea.war
 
+# Prepare path for example data
+RUN mkdir -p ${WS_DAGSIM_DATA} && \
+    chown -R ${WSI_USER}:${WSI_USER} $(dirname ${WS_DAGSIM_DATA})
+
 # Go on user
 USER ${WSI_USER}
 WORKDIR ${WSI_HOME}
@@ -92,8 +96,7 @@ COPY wsi_config.xml ${WSI_CONFIG_FILE}
 RUN mkdir ${WSI_HOME}/Uploaded
 
 # Copy datas of WS_DagSim
-RUN mkdir -p ${WS_DAGSIM_DATA} && \
-    cp /tarball/WS_DagSim/6_2_8G_500.tar.gz ${WS_DAGSIM_DATA}/ && \
+RUN cp /tarball/WS_DagSim/6_2_8G_500.tar.gz ${WS_DAGSIM_DATA}/ && \
     cd ${WS_DAGSIM_DATA} && \
     tar -zxvf 6_2_8G_500.tar.gz
 
