@@ -22,6 +22,8 @@ ENV LUNDSTROM_REPOSITORY https://github.com/eubr-bigsea/lundstrom
 ENV LUNDSTROM_HOME /opt/lundstrom
 ENV WS_LUNDSTROM_REPOSITORY https://github.com/eubr-bigsea/lundstrom-ws
 ENV WS_DAGSIM_DATA /home/work/TPCDS500-D_processed_logs
+ENV OPT_IC_REPOSITORY https://github.com/BiagioFesta/OPT_IC
+ENV OPT_IC_HOME /opt/opt_ic
 
 # Install environment dependencies
 RUN apt-get update && apt-get install -y git maven openjdk-8-jdk wget make gcc libmysqlclient-dev liblua5.3-dev python2.7
@@ -80,6 +82,23 @@ RUN cd /tarball && \
     mvn compile && \
     mvn package && \
     install -D -o ${WSI_USER} -g ${WSI_USER} target/bigsea.war /opt/apache-tomcat-${TOMCAT_VERSION}/webapps/bigsea.war
+
+# Download and install OPT_IC
+RUN cd /tarball && \
+    git clone ${OPT_IC_REPOSITORY} && \
+    cd OPT_IC && \
+    make && \
+    install -D -o ${WSI_USER} -g ${WSI_USER} Res_opt ${OPT_IC_HOME}/Resopt && \
+    install -D -m 664 -o ${WSI_USER} -g ${WSI_USER} app_P8.txt ${OPT_IC_HOME}/app_P8.txt && \
+    cp -r data/ ${OPT_IC_HOME} && \
+    cp -r lua/ ${OPT_IC_HOME} && \
+    chown -R ${WSI_USER}:${WSI_USER} ${OPT_IC_HOME}/data && \
+    chown -R ${WSI_USER}:${WSI_USER} ${OPT_IC_HOME}/lua && \
+    touch ${OPT_IC_HOME}/config.txt && \
+    chown ${WSI_USER}:${WSI_USER} ${OPT_IC_HOME}/config.txt && \
+    echo "${OPT_IC_HOME}/data/" >> ${OPT_IC_HOME}/config.txt && \
+    echo "${DAGSIM_HOME}/" >> ${OPT_IC_HOME}/config.txt && \
+    echo "${OPT_IC_HOME}/lua/" >> ${OPT_IC_HOME}/config.txt 
 
 # Prepare path for example data
 RUN mkdir -p ${WS_DAGSIM_DATA} && \
