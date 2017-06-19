@@ -39,8 +39,8 @@ RUN mkdir /tarball && \
 
 # Download and install the web service application (deploy on tomcat)
 RUN cd /tarball && \
-    git clone ${WSI_REPOSITORY} && \
-    cd wsi_polimi/WSI && \
+    git clone ${WSI_REPOSITORY} wsi && \
+    cd wsi/WSI && \
     mvn initialize && \
     mvn compile && \
     mvn package && \
