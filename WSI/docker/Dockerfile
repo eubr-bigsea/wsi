@@ -2,7 +2,7 @@
 FROM ubuntu:16.04
 MAINTAINER biagio.festa[at]gmail.com
 
-ENV WSI_REPOSITORY https://github.com/BiagioFesta/wsi_polimi.git
+ENV WSI_REPOSITORY https://github.com/eubr-bigsea/wsi.git
 ENV OPTIMIZE_REPOSITORY https://github.com/eubr-bigsea/opt_jr
 ENV WSI_VERSION 0.0.1-SNAPSHOT
 ENV TOMCAT_VERSION_MAJOR 7
