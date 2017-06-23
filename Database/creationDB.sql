@@ -35,7 +35,7 @@ CREATE TABLE `RUNNING_APPLICATION_TABLE` (
        
 CREATE TABLE `OPTIMIZER_CONFIGURATION_TABLE` (
   `application_id` VARCHAR(100) NOT NULL,
-  `dataset_size` DOUBLE NOT NULL,
+  `dataset_size` VARCHAR(100) NOT NULL,
   `deadline` DOUBLE NOT NULL,
   `num_cores_opt` INT NOT NULL,
   `num_vm_opt` INT NOT NULL,
