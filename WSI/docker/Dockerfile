@@ -22,7 +22,7 @@ ENV LUNDSTROM_REPOSITORY https://github.com/eubr-bigsea/lundstrom
 ENV LUNDSTROM_HOME /opt/lundstrom
 ENV WS_LUNDSTROM_REPOSITORY https://github.com/eubr-bigsea/lundstrom-ws
 ENV WS_DAGSIM_DATA /home/work/TPCDS500-D_processed_logs
-ENV OPT_IC_REPOSITORY https://github.com/BiagioFesta/OPT_IC
+ENV OPT_IC_REPOSITORY https://github.com/eubr-bigsea/OPT_IC
 ENV OPT_IC_HOME /opt/opt_ic
 
 # Install environment dependencies
