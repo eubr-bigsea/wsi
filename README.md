@@ -8,7 +8,16 @@ Those services are a process's part of the [Bigsea Project](http://www.eubra-big
 
 ### Build Image
 First of all, we need to build the docker image.
-From the repository root directory, launch:
+
+Before to build the docker image, you can modify the default configuration file. Indeed, when the docker image will be built, the configuration file located in the same directory of the Dockerfile will be imported into the image.
+
+For example:
+
+~~~
+vim WSI/docker/wsi_config.xml
+~~~
+
+Once the configuration file is ready, from the repository root directory, launch:
 
 ~~~
 cd WSI/docker
@@ -18,7 +27,7 @@ docker build --no-cache --force-rm -t wsi .
 This will build a docker image tagged as `wsi`.
 *Be patient, the building process could take several minutes.*
 
-Note that the container will be built with the configuration located in the same directory (i.e. `WSI/docker/wsi_config.xml`).
+Note that the docker image will be built with the configuration located in the same directory (i.e. `WSI/docker/wsi_config.xml`).
 
 Once the images has been built, the WebService can be launched in a docker container.
 
@@ -35,8 +44,7 @@ where the enviroment variable `WSI_SERVICE_PORT` is the port where tomcat will l
 
 The options:
  * `-d` launchs the container in a demon process.
- * `-v` binds a custom configuration file in the container. If you want to use the default configuration just skip that option.
- in the container.
+ * `-v` binds a custom configuration file in the container. If you want to use the default configuration just skip that option. The default configuration file has been defined when you have built the docker image.
  * `-p` allows the binding of the port.
  * `--name` sets the name of docker container.
  
