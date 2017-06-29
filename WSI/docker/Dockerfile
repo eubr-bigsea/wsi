@@ -21,9 +21,10 @@ ENV DAGSIM_HOME /opt/dagSim
 ENV LUNDSTROM_REPOSITORY https://github.com/eubr-bigsea/lundstrom
 ENV LUNDSTROM_HOME /opt/lundstrom
 ENV WS_LUNDSTROM_REPOSITORY https://github.com/eubr-bigsea/lundstrom-ws
-ENV WS_DAGSIM_DATA /home/work/TPCDS500-D_processed_logs
 ENV OPT_IC_REPOSITORY https://github.com/eubr-bigsea/OPT_IC
 ENV OPT_IC_HOME /opt/opt_ic
+ENV OPT_DATA_CONFIG https://github.com/eubr-bigsea/OPT_DATA_CONFIG
+ENV EXAMPLE_DATA_HOME /home/work/TPCDS500-D_processed_logs
 
 # Install environment dependencies
 RUN apt-get update && apt-get install -y git maven openjdk-8-jdk wget make gcc libmysqlclient-dev liblua5.3-dev python2.7
@@ -89,7 +90,6 @@ RUN cd /tarball && \
     cd OPT_IC && \
     make && \
     install -D -o ${WSI_USER} -g ${WSI_USER} Res_opt ${OPT_IC_HOME}/Resopt && \
-    install -D -m 664 -o ${WSI_USER} -g ${WSI_USER} app_P8.txt ${OPT_IC_HOME}/app_P8.txt && \
     cp -r data/ ${OPT_IC_HOME} && \
     cp -r lua/ ${OPT_IC_HOME} && \
     chown -R ${WSI_USER}:${WSI_USER} ${OPT_IC_HOME}/data && \
@@ -100,9 +100,13 @@ RUN cd /tarball && \
     echo "${DAGSIM_HOME}/" >> ${OPT_IC_HOME}/config.txt && \
     echo "${OPT_IC_HOME}/lua/" >> ${OPT_IC_HOME}/config.txt 
 
+# Download example data
+RUN cd /tarball && \
+    git clone ${OPT_DATA_CONFIG}
+
 # Prepare path for example data
-RUN mkdir -p ${WS_DAGSIM_DATA} && \
-    chown -R ${WSI_USER}:${WSI_USER} $(dirname ${WS_DAGSIM_DATA})
+RUN mkdir -p ${EXAMPLE_DATA_HOME} && \
+    chown -R ${WSI_USER}:${WSI_USER} $(dirname ${EXAMPLE_DATA_HOME})
 
 # Go on user
 USER ${WSI_USER}
@@ -114,10 +118,10 @@ COPY wsi_config.xml ${WSI_CONFIG_FILE}
 # Create directory for upload
 RUN mkdir ${WSI_HOME}/Uploaded
 
-# Copy datas of WS_DagSim
-RUN cp /tarball/WS_DagSim/6_2_8G_500.tar.gz ${WS_DAGSIM_DATA}/ && \
-    cd ${WS_DAGSIM_DATA} && \
-    tar -zxvf 6_2_8G_500.tar.gz
+# Copy example datas
+RUN cp /tarball/OPT_DATA_CONFIG/TPCDS500-D_processed_logs.tar.gz ${EXAMPLE_DATA_HOME}/ && \
+    cd ${EXAMPLE_DATA_HOME} && \
+    tar -zxvf TPCDS500-D_processed_logs.tar.gz
 
 EXPOSE 8080
 
