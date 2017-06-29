@@ -24,5 +24,5 @@ public class queryApp {
 	public double vir_memory;
 	public int phi_core;
 	public int vir_core;
-	public double deadline;
+	public double dataset_size;
 }

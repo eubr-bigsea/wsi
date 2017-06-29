@@ -97,7 +97,9 @@ public class Session {
 					+ queryResult.phi_memory + ","
 					+ queryResult.vir_core + ","
 					+ queryResult.phi_core + ","
-					+ params.getDeadline();
+					+ params.getDeadline() + ","
+					+ params.getStageID() + ","
+					+ queryResult.dataset_size;
 			rows_csv.add(csv_row);
 		}
 		String csv_final = "";

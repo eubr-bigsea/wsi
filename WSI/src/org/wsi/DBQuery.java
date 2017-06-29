@@ -64,6 +64,7 @@ public class DBQuery {
 			rtn.vir_memory = result.getDouble("vir_mem");
 			rtn.phi_core = result.getInt("phi_core");
 			rtn.vir_core = result.getInt("vir_core");
+			rtn.dataset_size = result.getDouble("dataset_size");
 			return rtn;
 		}
 		
@@ -79,6 +80,7 @@ public class DBQuery {
 		cols_sel.add("vir_mem");
 		cols_sel.add("phi_core");
 		cols_sel.add("vir_core");
+		cols_sel.add("dataset_size");
 		
 		String rtn = "SELECT ";
 		for (int i = 0; i < cols_sel.size(); ++i) {

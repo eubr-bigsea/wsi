@@ -112,13 +112,13 @@
             <td>POST Body:</td>
             <td>
               A plain text string formatted in the following way:<br>
-              APP_SESSION_ID WEIGHT DEADLINE
+              APP_SESSION_ID WEIGHT DEADLINE STAGE_ID
             </td>
           </tr>
           <tr>
             <td>Description:</td>
             <td>
-              This method will set the parameters of weight and deadline for a particular
+              This method will set the parameters of weight, deadline and stageID for a particular
               app-session-id.<br>
               The parameter <em>SID</em>, as usual, is the unique session identifier for the session.<br>
               The body of the post request is a plain text string of one single line. The line
@@ -203,7 +203,7 @@ OK. Numbers have been set
         <p>
           The first setting may be something like:<br>
           <code>
-curl -X POST -H "Content-Type: text/plain" -d 'APP-SESSION-ID1 3.14 3.14' "http://localhost:8080/WSI/session/setparams?SID=88421905-bdff-4ae3-b325-90b74e9e4974"
+curl -X POST -H "Content-Type: text/plain" -d 'APP-SESSION-ID1 3.14 3.14 STAGE_ID' "http://localhost:8080/WSI/session/setparams?SID=88421905-bdff-4ae3-b325-90b74e9e4974"
           </code>
         </p>
 

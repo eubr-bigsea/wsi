@@ -3,8 +3,7 @@
 WSI_IP="localhost"
 WSI_PORT="8080"
 APP_IDS=("application_1483347394756_0" \
-             "application_1483347394756_1" \
-             "application_1483347394756_2")
+	"application_1483347394756_1")
 NUM_CORES=$(( (RANDOM % 1001) + 1))
 
 # Open new session
@@ -21,6 +20,6 @@ echo ""
 # Set app param for each app
 for app in ${APP_IDS[@]}; do
     echo "Setting application: ${app}";
-    curl -X POST -H "Content-Type: text/plain" -d "${app} 3.14 3.14" "http://${WSI_IP}:${WSI_PORT}/WSI/session/setparams?SID=${SID}"
+    curl -X POST -H "Content-Type: text/plain" -d "${app} 3.14 3.14 stageID" "http://${WSI_IP}:${WSI_PORT}/WSI/session/setparams?SID=${SID}"
     echo ""
 done;

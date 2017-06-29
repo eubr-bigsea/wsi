@@ -37,7 +37,8 @@ SELECT `APPLICATION_PROFILE_TABLE`.`application_id`,
        `APPLICATION_PROFILE_TABLE`.`phi_mem`,
        `APPLICATION_PROFILE_TABLE`.`vir_mem`,
        `APPLICATION_PROFILE_TABLE`.`phi_core`,
-       `APPLICATION_PROFILE_TABLE`.`vir_core`
+       `APPLICATION_PROFILE_TABLE`.`vir_core`,
+       `APPLICATION_PROFILE_TABLE`.`dataset_size`
   FROM `RUNNING_APPLICATION_TABLE` JOIN `APPLICATION_PROFILE_TABLE`
   ON `RUNNING_APPLICATION_TABLE`.`application_id` = `APPLICATION_PROFILE_TABLE`.`application_id`
   WHERE `application_session_id` = "APPLICATION_SESSION_ID";
@@ -50,13 +51,13 @@ SELECT `APPLICATION_PROFILE_TABLE`.`application_id`,
       <p>
         The web service expects a table in this database:
         <ul>
-          <li>opt</li>
+          <li>OPT_SESSION_RESULTS</li>
         </ul>
 
         The query will be in the following form:
         <xmp>
 SELECT nu
-  FROM `opt`
+  FROM `OPT_SESSION_RESULTS`
   WHERE opt_id = "CSV_FILENAME" AND app_id = "APP_ID";
         </xmp>
       </p>
