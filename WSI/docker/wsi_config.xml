@@ -16,7 +16,7 @@
 <entry key="OptDB_tablename">OPT_SESSIONS_RESULTS</entry>
 <entry key="OptDB_IP">127.0.0.1</entry>
 <entry key="UPLOAD_HOME">/home/wsi/Uploaded</entry>
-<entry key="OptDB_pass">!b1g534</entry>
-<entry key="AppsPropDB_pass">!b1g534</entry>
+<entry key="OptDB_pass">b1g534</entry>
+<entry key="AppsPropDB_pass">b1g534</entry>
 <entry key="OptDB_dbName">bigsea</entry>
 </properties>
