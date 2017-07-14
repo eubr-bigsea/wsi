@@ -25,6 +25,9 @@ ENV OPT_IC_REPOSITORY https://github.com/eubr-bigsea/OPT_IC
 ENV OPT_IC_HOME /opt/opt_ic
 ENV OPT_DATA_CONFIG https://github.com/eubr-bigsea/OPT_DATA_CONFIG
 ENV EXAMPLE_DATA_HOME /home/work/TPCDS500-D_processed_logs
+ENV SPARK_LOG_PARSER_REPO https://github.com/eubr-bigsea/SparkLogParser
+ENV SPARK_LOG_PARSER_HOME /opt/SparkLogParser
+
 
 # Install environment dependencies
 RUN apt-get update && apt-get install -y git maven openjdk-8-jdk wget make gcc libmysqlclient-dev liblua5.3-dev python2.7
@@ -99,6 +102,13 @@ RUN cd /tarball && \
     echo "${OPT_IC_HOME}/data/" >> ${OPT_IC_HOME}/config.txt && \
     echo "${DAGSIM_HOME}/" >> ${OPT_IC_HOME}/config.txt && \
     echo "${OPT_IC_HOME}/lua/" >> ${OPT_IC_HOME}/config.txt 
+
+# Download and install Spark Parse Log
+RUN cd /tarball && \
+    git clone ${SPARK_LOG_PARSER_REPO} && \
+    cp -r SparkLogParser ${SPARK_LOG_PARSER_HOME} && \
+    cat SparkLogParser/config.sh | sed "s|DAGSIM=.*$|DAGSIM=${DAGSIM_HOME}/dagsim.sh|g" > ${SPARK_LOG_PARSER_HOME}/config.sh && \
+    chown -R ${WSI_USER}:${WSI_USER} ${SPARK_LOG_PARSER_HOME}
 
 # Download example data
 RUN cd /tarball && \
