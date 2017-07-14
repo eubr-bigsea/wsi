@@ -19,7 +19,6 @@ INSERT INTO `RUNNING_APPLICATION_TABLE` (
   `application_id`,
   `dataset_size`,
   `submission_time`,
-  `status`,
-  `ending_time`)
-    VALUES ('application_1483347394756_0', 'Q26', 123, CURRENT_TIMESTAMP, 'RUNNING', 0),
-           ('application_1483347394756_1', 'Q52', 123, CURRENT_TIMESTAMP, 'RUNNING', 0);
+  `status`)
+    VALUES ('application_1483347394756_0', 'Q26', 123, CURRENT_TIMESTAMP, 'RUNNING'),
+           ('application_1483347394756_1', 'Q52', 123, CURRENT_TIMESTAMP, 'RUNNING');
