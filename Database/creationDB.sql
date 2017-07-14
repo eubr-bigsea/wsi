@@ -10,6 +10,9 @@ DROP TABLE IF EXISTS `RUNNING_APPLICATION_TABLE`;
 DROP TABLE IF EXISTS `APPLICATION_PROFILE_TABLE`;
 DROP TABLE IF EXISTS `OPT_SESSIONS_RESULTS`;
 
+-- Allow zero timestamp
+SET sql_mode = '';
+
 CREATE TABLE `APPLICATION_PROFILE_TABLE` (
   `application_id` VARCHAR(100) NOT NULL,
   `dataset_size` DOUBLE NOT NULL,
@@ -28,7 +31,7 @@ CREATE TABLE `RUNNING_APPLICATION_TABLE` (
   `dataset_size` DOUBLE NOT NULL,
   `submission_time` TIMESTAMP NOT NULL,
   `status` VARCHAR(100) NOT NULL,
-  `ending_time` TIMESTAMP,
+  `ending_time` TIMESTAMP DEFAULT 0,
   PRIMARY KEY (`application_session_id`),
   FOREIGN KEY (`application_id`) REFERENCES `APPLICATION_PROFILE_TABLE`(`application_id`)
 );
