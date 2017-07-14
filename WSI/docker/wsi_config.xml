@@ -10,13 +10,13 @@
 <entry key="LUNDSTROM_HOME">/opt/lundstrom</entry>
 <entry key="OPTIMIZE_HOME">/opt/optimize/optimize</entry>
 <entry key="OptDB_user">root</entry>
-<entry key="AppsPropDB_user">root</entry>
-<entry key="AppsPropDB_IP">172.17.0.1</entry>
-<entry key="AppsPropDB_dbName">150test</entry>
+<entry key="AppsPropDB_user">bigsea</entry>
+<entry key="AppsPropDB_IP">127.0.0.1</entry>
+<entry key="AppsPropDB_dbName">bigsea</entry>
 <entry key="OptDB_tablename">OPT_SESSIONS_RESULTS</entry>
-<entry key="OptDB_IP">172.17.0.1</entry>
+<entry key="OptDB_IP">127.0.0.1</entry>
 <entry key="UPLOAD_HOME">/home/wsi/Uploaded</entry>
-<entry key="OptDB_pass">biagio</entry>
-<entry key="AppsPropDB_pass">biagio</entry>
-<entry key="OptDB_dbName">150test</entry>
+<entry key="OptDB_pass">!b1g534</entry>
+<entry key="AppsPropDB_pass">!b1g534</entry>
+<entry key="OptDB_dbName">bigsea</entry>
 </properties>

@@ -1,9 +1,9 @@
 #!/bin/bash
 # Copyright 2017 <Biagio Festa>
 
-MYSQL_ROOT_PASSWORD=admin
-MYSQL_USER=user
-MYSQL_USER_PASSWORD=user
+MYSQL_ROOT_PASSWORD=!4dm1n
+MYSQL_USER=bigsea
+MYSQL_USER_PASSWORD=!b1g534
 MYSQL_DATABASE=bigsea
 
 DOCKER_CONTAINER_NAME=mysql_bigsea
@@ -22,8 +22,7 @@ function until_conn {
     return 0;
 }
 
-docker rm -f ${DOCKER_CONTAINER_NAME} && \
-    docker run -d --name ${DOCKER_CONTAINER_NAME} -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD} \
+docker run -d --name ${DOCKER_CONTAINER_NAME} -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD} \
            -e MYSQL_DATABASE=${MYSQL_DATABASE} -p ${DOCKER_MYSQL_PORT}:3306 mysql:latest && \
     until_conn && \
     docker cp creationDB.sql ${DOCKER_CONTAINER_NAME}:/ && \
