@@ -67,5 +67,22 @@ By default, the configuration file in the container is located in:
 
 
 
+# Database Creation
+In order to create the mysql database schema a simple *bash* script has been provided.
+
+~~~
+cd Database
+chmod u+x startNewDockerContainer.sh
+sudo ./startNewDockerContainer.sh
+~~~
+
+The script is a simple wrap to **docker commands**. In order to launch the script you need to have a proper docker engine installed on your machine.
+
+Before to launch the script you can modify the passwords and username directly open the script.
+
+The script will launch a *mysql* docker container (exposing the mysql port) and it will populate the database with examples datas.
+
+This script may require *root privileges*.
+
 
  
