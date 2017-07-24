@@ -31,4 +31,5 @@ docker run -d --name ${DOCKER_CONTAINER_NAME} -e MYSQL_ROOT_PASSWORD=${MYSQL_ROO
     docker exec -it ${DOCKER_CONTAINER_NAME} chmod u+x /importSQL.sh && \
     docker exec -it ${DOCKER_CONTAINER_NAME} mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "create user '${MYSQL_USER}'@'%' identified by '${MYSQL_USER_PASSWORD}';" && \
     docker exec -it ${DOCKER_CONTAINER_NAME} mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "grant all on ${MYSQL_DATABASE}.* to '${MYSQL_USER}'@'%';" && \
-    docker exec -it ${DOCKER_CONTAINER_NAME} /importSQL.sh root ${MYSQL_ROOT_PASSWORD} ${MYSQL_DATABASE}
+    docker exec -it ${DOCKER_CONTAINER_NAME} /importSQL.sh root ${MYSQL_ROOT_PASSWORD} ${MYSQL_DATABASE} && \
+    echo "Done."
