@@ -30,7 +30,7 @@ ENV SPARK_LOG_PARSER_HOME /opt/SparkLogParser
 
 
 # Install environment dependencies
-RUN apt-get update && apt-get install -y git maven openjdk-8-jdk wget make gcc libmysqlclient-dev liblua5.3-dev python2.7
+RUN apt-get update && apt-get install -y nano git maven openjdk-8-jdk wget make gcc libmysqlclient-dev liblua5.3-dev python2.7
 
 # Install tomcat in ${CATALINA_HOME}
 RUN mkdir /tarball && \
