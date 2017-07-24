@@ -118,12 +118,13 @@ RUN cd /tarball && \
 RUN mkdir -p ${EXAMPLE_DATA_HOME} && \
     chown -R ${WSI_USER}:${WSI_USER} $(dirname ${EXAMPLE_DATA_HOME})
 
+# Copy Configuration file
+COPY wsi_config.xml ${WSI_CONFIG_FILE}
+RUN chown ${WSI_USER}:${WSI_USER} ${WSI_CONFIG_FILE}
+
 # Go on user
 USER ${WSI_USER}
 WORKDIR ${WSI_HOME}
-
-# Copy Configuration file
-COPY wsi_config.xml ${WSI_CONFIG_FILE}
 
 # Create directory for upload
 RUN mkdir ${WSI_HOME}/Uploaded
