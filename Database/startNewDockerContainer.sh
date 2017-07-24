@@ -1,6 +1,16 @@
 #!/bin/bash
 # Copyright 2017 <Biagio Festa>
 
+# Put in $DIR the path of the script
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do
+  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+echo $DIR
+
 MYSQL_ROOT_PASSWORD=4dm1n
 MYSQL_USER=bigsea
 MYSQL_USER_PASSWORD=b1g534
@@ -25,9 +35,9 @@ function until_conn {
 docker run -d --name ${DOCKER_CONTAINER_NAME} -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD} \
            -e MYSQL_DATABASE=${MYSQL_DATABASE} -p ${DOCKER_MYSQL_PORT}:3306 mysql:latest && \
     until_conn && \
-    docker cp creationDB.sql ${DOCKER_CONTAINER_NAME}:/ && \
-    docker cp insertFakeData.sql ${DOCKER_CONTAINER_NAME}:/ && \
-    docker cp importSQL.sh ${DOCKER_CONTAINER_NAME}:/ && \
+    docker cp ${DIR}/creationDB.sql ${DOCKER_CONTAINER_NAME}:/ && \
+    docker cp ${DIR}/insertFakeData.sql ${DOCKER_CONTAINER_NAME}:/ && \
+    docker cp ${DIR}/importSQL.sh ${DOCKER_CONTAINER_NAME}:/ && \
     docker exec -it ${DOCKER_CONTAINER_NAME} chmod u+x /importSQL.sh && \
     docker exec -it ${DOCKER_CONTAINER_NAME} mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "create user '${MYSQL_USER}'@'%' identified by '${MYSQL_USER_PASSWORD}';" && \
     docker exec -it ${DOCKER_CONTAINER_NAME} mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "grant all on ${MYSQL_DATABASE}.* to '${MYSQL_USER}'@'%';" && \
