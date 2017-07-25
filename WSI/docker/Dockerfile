@@ -30,7 +30,7 @@ ENV SPARK_LOG_PARSER_HOME /opt/SparkLogParser
 
 
 # Install environment dependencies
-RUN apt-get update && apt-get install -y nano git maven openjdk-8-jdk wget make gcc libmysqlclient-dev liblua5.3-dev python2.7
+RUN apt-get update && apt-get install -y nano git maven openjdk-8-jdk wget make gcc libmysqlclient-dev liblua5.3-dev python2.7 python
 
 # Install tomcat in ${CATALINA_HOME}
 RUN mkdir /tarball && \
@@ -104,7 +104,9 @@ RUN cd /tarball && \
     git clone ${SPARK_LOG_PARSER_REPO} && \
     cp -r SparkLogParser ${SPARK_LOG_PARSER_HOME} && \
     cat SparkLogParser/config.sh | sed "s|DAGSIM=.*$|DAGSIM=${DAGSIM_HOME}/dagsim.sh|g" > ${SPARK_LOG_PARSER_HOME}/config.sh && \
-    chown -R ${WSI_USER}:${WSI_USER} ${SPARK_LOG_PARSER_HOME}
+    chown -R ${WSI_USER}:${WSI_USER} ${SPARK_LOG_PARSER_HOME} && \
+    chmod ugo+x ${SPARK_LOG_PARSER_HOME}/process_logs.sh && \
+    chmod ugo+x ${SPARK_LOG_PARSER_HOME}/summarize.sh
 
 # Download example data
 RUN cd /tarball && \
