@@ -22,3 +22,15 @@ INSERT INTO `RUNNING_APPLICATION_TABLE` (
   `status`)
     VALUES ('application_1483347394756_0', 'Q26', 123, CURRENT_TIMESTAMP, 'RUNNING'),
            ('application_1483347394756_1', 'Q52', 123, CURRENT_TIMESTAMP, 'RUNNING');
+
+INSERT INTO `OPTIMIZER_CONFIGURATION_TABLE` (
+  `application_id`,
+  `dataset_size`,
+  `deadline`,
+  `num_cores_opt`,
+  `num_vm_opt`)
+   VALUES ('Q26', 500, 100000, 88, 22), 
+          ('Q26', 500, 1000000, 8, 2), 
+          ('Q52', 500, 200000, 42, 11), 
+          ('Q52', 500, 800000, 11, 3);
+  
