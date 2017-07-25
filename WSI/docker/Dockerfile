@@ -94,8 +94,8 @@ RUN cd /tarball && \
     make && \
     cp -r /tarball/OPT_IC /opt && \
     chown -R ${WSI_USER}:${WSI_USER} ${OPT_IC_HOME} && \
-    echo "" > ${OPT_IC_HOME}/config.txt && \
-    echo "${OPT_IC_HOME}/data/" >> ${OPT_IC_HOME}/config.txt && \
+    chmod ugo+x ${OPT_IC_HOME}/script.sh && \
+    echo "${OPT_IC_HOME}/data/" > ${OPT_IC_HOME}/config.txt && \
     echo "${DAGSIM_HOME}/" >> ${OPT_IC_HOME}/config.txt && \
     echo "${OPT_IC_HOME}/lua/" >> ${OPT_IC_HOME}/config.txt 
 
