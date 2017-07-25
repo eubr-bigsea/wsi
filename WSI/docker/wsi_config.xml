@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment/>
-<entry key="RESOPT_HOME">/home/work/ResOpt</entry>
+<entry key="RESOPT_HOME">/opt/OPT_IC</entry>
 <entry key="RESULTS_HOME">/home/work/TPCDS500-D_processed_logs</entry>
 <entry key="AppsPropDB_port">3306</entry>
 <entry key="OptDB_port">3306</entry>

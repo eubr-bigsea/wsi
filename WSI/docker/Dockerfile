@@ -22,7 +22,7 @@ ENV LUNDSTROM_REPOSITORY https://github.com/eubr-bigsea/lundstrom
 ENV LUNDSTROM_HOME /opt/lundstrom
 ENV WS_LUNDSTROM_REPOSITORY https://github.com/eubr-bigsea/lundstrom-ws
 ENV OPT_IC_REPOSITORY https://github.com/eubr-bigsea/OPT_IC
-ENV OPT_IC_HOME /opt/opt_ic
+ENV OPT_IC_HOME /opt/OPT_IC
 ENV OPT_DATA_CONFIG https://github.com/eubr-bigsea/OPT_DATA_CONFIG
 ENV EXAMPLE_DATA_HOME /home/work/TPCDS500-D_processed_logs
 ENV SPARK_LOG_PARSER_REPO https://github.com/eubr-bigsea/SparkLogParser
@@ -92,13 +92,9 @@ RUN cd /tarball && \
     git clone ${OPT_IC_REPOSITORY} && \
     cd OPT_IC && \
     make && \
-    install -D -o ${WSI_USER} -g ${WSI_USER} Res_opt ${OPT_IC_HOME}/Resopt && \
-    cp -r data/ ${OPT_IC_HOME} && \
-    cp -r lua/ ${OPT_IC_HOME} && \
-    chown -R ${WSI_USER}:${WSI_USER} ${OPT_IC_HOME}/data && \
-    chown -R ${WSI_USER}:${WSI_USER} ${OPT_IC_HOME}/lua && \
-    touch ${OPT_IC_HOME}/config.txt && \
-    chown ${WSI_USER}:${WSI_USER} ${OPT_IC_HOME}/config.txt && \
+    cp -r /tarball/OPT_IC /opt && \
+    chown -R ${WSI_USER}:${WSI_USER} ${OPT_IC_HOME} && \
+    echo "" > ${OPT_IC_HOME}/config.txt && \
     echo "${OPT_IC_HOME}/data/" >> ${OPT_IC_HOME}/config.txt && \
     echo "${DAGSIM_HOME}/" >> ${OPT_IC_HOME}/config.txt && \
     echo "${OPT_IC_HOME}/lua/" >> ${OPT_IC_HOME}/config.txt 
@@ -130,9 +126,9 @@ WORKDIR ${WSI_HOME}
 RUN mkdir ${WSI_HOME}/Uploaded
 
 # Copy example datas
-RUN cp /tarball/OPT_DATA_CONFIG/TPCDS500-D_processed_logs.tar.gz ${EXAMPLE_DATA_HOME}/ && \
+RUN cp /tarball/OPT_DATA_CONFIG/TPCDS500-D_processed_logs.tar.gz ${EXAMPLE_DATA_HOME} && \
     cd ${EXAMPLE_DATA_HOME} && \
-    tar -zxvf TPCDS500-D_processed_logs.tar.gz
+    tar -zxvf TPCDS500-D_processed_logs.tar.gz -C ..
 
 EXPOSE 8080
 
