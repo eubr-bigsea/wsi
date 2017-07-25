@@ -27,10 +27,10 @@ ENV OPT_DATA_CONFIG https://github.com/eubr-bigsea/OPT_DATA_CONFIG
 ENV EXAMPLE_DATA_HOME /home/work/TPCDS500-D_processed_logs
 ENV SPARK_LOG_PARSER_REPO https://github.com/eubr-bigsea/SparkLogParser
 ENV SPARK_LOG_PARSER_HOME /opt/SparkLogParser
-
+ENV WSI_PASSWORD w51p455w0rd
 
 # Install environment dependencies
-RUN apt-get update && apt-get install -y nano git maven openjdk-8-jdk wget make gcc libmysqlclient-dev liblua5.3-dev python2.7 python
+RUN apt-get update && apt-get install -y nano vim git maven openjdk-8-jdk wget make gcc libmysqlclient-dev liblua5.3-dev python2.7 python vsftpd
 
 # Install tomcat in ${CATALINA_HOME}
 RUN mkdir /tarball && \
@@ -52,7 +52,8 @@ RUN cd /tarball && \
 
 # Create user ${WSI_USER} and give him privileges on ${CATALINA_HOME} (tomcat install directory)
 RUN useradd -ms /bin/bash ${WSI_USER} && \
-    chown -R ${WSI_USER}:${WSI_USER} ${CATALINA_HOME}
+    chown -R ${WSI_USER}:${WSI_USER} ${CATALINA_HOME} && \
+    echo "${WSI_USER}:${WSI_PASSWORD}" | chpasswd
 
 # Download and install optmizer
 RUN cd /tarball && \
