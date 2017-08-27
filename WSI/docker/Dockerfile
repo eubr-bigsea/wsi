@@ -7,7 +7,7 @@ ENV OPTIMIZE_REPOSITORY https://github.com/eubr-bigsea/opt_jr
 ENV WSI_VERSION 0.0.1-SNAPSHOT
 ENV TOMCAT_VERSION_MAJOR 7
 ENV TOMCAT_VERSION 7.0.79
-ENV TOMCAT_REPO http://apache.panu.it/tomcat/
+ENV TOMCAT_REPO http://archive.apache.org/dist/tomcat
 ENV CATALINA_HOME /opt/apache-tomcat-${TOMCAT_VERSION}
 ENV PATH $CATALINA_HOME/bin:$PATH
 ENV WSI_USER wsi
