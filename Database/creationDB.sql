@@ -60,10 +60,11 @@ CREATE TABLE `OPT_SESSIONS_RESULTS_TABLE` (
 CREATE TABLE `PREDICTOR_CACHE_TABLE` (
    `application_id` VARCHAR(100) NOT NULL,
    `dataset_size` DOUBLE NOT NULL,
-   `n_cores` INT NOT NULL,
+   `num_cores` INT NOT NULL,
    `stage` VARCHAR(10) NOT NULL,
+   `is_residual` BOOLEAN DEFAULT TRUE,
    `val` DOUBLE NOT NULL,
-   PRIMARY KEY(`application_id`, `dataset_size`, `n_cores`, `stage`),
+   PRIMARY KEY(`application_id`, `dataset_size`, `n_cores`, `stage`, `is_residual`,
    FOREIGN KEY (`application_id`, `dataset_size`) REFERENCES `APPLICATION_PROFILE_TABLE`(`application_id`, `dataset_size`) 
 );
 
