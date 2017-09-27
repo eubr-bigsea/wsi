@@ -13,4 +13,5 @@ echo -n "User Password: "
 read -s user_db_password
 
 docker exec -it ${DOCKER_CONTAINER_NAME} bin/bash -c "mysql -u${MYSQL_USER} -p${user_db_password} ${MYSQL_DATABASE} < ${SCRIPT_FILE}";
+echo "Done"
 
