@@ -11,8 +11,8 @@ INSERT INTO `APPLICATION_PROFILE_TABLE` (
   `phi_core`,
   `vir_core`,
   `chi_0`,
-  `chi_c`) VALUES ('Q26', 123, 123, 123, 123, 123, 123, 123),
-                  ('Q52', 123, 123, 123, 123, 123, 123, 123);
+  `chi_c`) VALUES ('Q26', 500, 123, 123, 123, 123, 123, 123),
+                  ('Q52', 500, 123, 123, 123, 123, 123, 123);
 
 INSERT INTO `RUNNING_APPLICATION_TABLE` (
   `application_session_id`,
@@ -22,8 +22,8 @@ INSERT INTO `RUNNING_APPLICATION_TABLE` (
   `status`,
   `weight`,
   `deadline`)
-    VALUES ('application_1483347394756_0', 'Q26', 123, CURRENT_TIMESTAMP, 'RUNNING', 3.14, 100),
-           ('application_1483347394756_1', 'Q52', 123, CURRENT_TIMESTAMP, 'RUNNING', 3.14, 100);
+    VALUES ('application_1483347394756_0', 'Q26', 500, CURRENT_TIMESTAMP, 'RUNNING', 3.14, 100),
+           ('application_1483347394756_1', 'Q52', 500, CURRENT_TIMESTAMP, 'RUNNING', 3.14, 100);
 
 INSERT INTO `OPTIMIZER_CONFIGURATION_TABLE` (
   `application_id`,
@@ -31,8 +31,8 @@ INSERT INTO `OPTIMIZER_CONFIGURATION_TABLE` (
   `deadline`,
   `num_cores_opt`,
   `num_vm_opt`)
-   VALUES ('Q26', 123, 100000, 88, 22), 
-          ('Q26', 123, 1000000, 8, 2), 
-          ('Q52', 123, 200000, 42, 11), 
-          ('Q52', 123, 800000, 11, 3);
+   VALUES ('Q26', 500, 100000, 88, 22), 
+          ('Q26', 500, 1000000, 8, 2), 
+          ('Q52', 500, 200000, 42, 11), 
+          ('Q52', 500, 800000, 11, 3);
   
