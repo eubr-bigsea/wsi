@@ -103,7 +103,7 @@ RUN cd /tarball && \
 RUN cd /tarball && \
     git clone ${OPT_IC_REPOSITORY} && \
     cd OPT_IC && \
-    make CXXINCLUDES=${OPT_COMMON_HOME}/include && \
+    make CXXINCLUDES="-I${OPT_COMMON_HOME}/include" && \
     mkdir -p ${OPT_IC_HOME} && \
     mkdir -p ${OPT_IC_HOME}/data && \
     mkdir -p ${OPT_IC_HOME}/lua && \
@@ -120,7 +120,7 @@ RUN cd /tarball && \
 RUN cd /tarball && \
     git clone ${OPT_DEADLINE_REPOSITORY} && \
     cd OPT_Deadline && \
-    make OPT_COMMON_INCLUDE=${OPT_COMMON_HOME}/include && \
+    make OPT_COMMON_INCLUDE="-I${OPT_COMMON_HOME}/include" && \
     mkdir -p ${OPT_DEADLINE_HOME} && \
     cp opt_deadline ${OPT_DEADLINE_HOME} && \
     chown -R ${WSI_USER}:${WSI_USER} ${OPT_DEADLINE_HOME}
