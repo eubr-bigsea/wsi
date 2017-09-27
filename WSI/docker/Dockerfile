@@ -21,8 +21,12 @@ ENV DAGSIM_HOME /opt/dagSim
 ENV LUNDSTROM_REPOSITORY https://github.com/eubr-bigsea/lundstrom
 ENV LUNDSTROM_HOME /opt/lundstrom
 ENV WS_LUNDSTROM_REPOSITORY https://github.com/eubr-bigsea/lundstrom-ws
+ENV OPT_COMMON_REPOSITORY https://github.com/eubr-bigsea/OPT_Common
+ENV OPT_COMMON_HOME /opt/OPT_Common
 ENV OPT_IC_REPOSITORY https://github.com/eubr-bigsea/OPT_IC
 ENV OPT_IC_HOME /opt/OPT_IC
+ENV OPT_DEADLINE_REPOSITORY https://github.com/eubr-bigsea/OPT_Deadline
+ENV OPT_DEADLINE_HOME /opt/OPT_Deadline
 ENV OPT_DATA_CONFIG https://github.com/eubr-bigsea/OPT_DATA_CONFIG
 ENV EXAMPLE_DATA_HOME /home/work/TPCDS500-D_processed_logs
 ENV SPARK_LOG_PARSER_REPO https://github.com/eubr-bigsea/SparkLogParser
@@ -88,17 +92,39 @@ RUN cd /tarball && \
     mvn package && \
     install -D -o ${WSI_USER} -g ${WSI_USER} target/bigsea.war /opt/apache-tomcat-${TOMCAT_VERSION}/webapps/bigsea.war
 
+# Download and install OPT_Common
+RUN cd /tarball && \
+    git clone ${OPT_COMMON_REPOSITORY} && \
+    mkdir -p ${OPT_COMMON_HOME} && \
+    cp -r OPT_Common/* ${OPT_COMMON_HOME} && \
+    chown -R ${WSI_USER}:${WSI_USER} ${OPT_COMMON_HOME}
+
 # Download and install OPT_IC
 RUN cd /tarball && \
     git clone ${OPT_IC_REPOSITORY} && \
     cd OPT_IC && \
-    make && \
-    cp -r /tarball/OPT_IC /opt && \
+    make CXXINCLUDES=${OPT_COMMON_HOME}/include && \
+    mkdir -p ${OPT_IC_HOME} && \
+    mkdir -p ${OPT_IC_HOME}/data && \
+    mkdir -p ${OPT_IC_HOME}/lua && \
+    cp src/opt_ic ${OPT_IC_HOME}/ && \
+    cp config.txt ${OPT_IC_HOME} && \
+    cp script.sh  ${OPT_IC_HOME} && \
     chown -R ${WSI_USER}:${WSI_USER} ${OPT_IC_HOME} && \
     chmod ugo+x ${OPT_IC_HOME}/script.sh && \
     echo "${OPT_IC_HOME}/data/" > ${OPT_IC_HOME}/config.txt && \
     echo "${DAGSIM_HOME}/" >> ${OPT_IC_HOME}/config.txt && \
-    echo "${OPT_IC_HOME}/lua/" >> ${OPT_IC_HOME}/config.txt 
+    echo "${OPT_IC_HOME}/lua/" >> ${OPT_IC_HOME}/config.txt
+
+# Download and install OPT_Deadline
+RUN cd /tarball && \
+    git clone ${OPT_DEADLINE_REPOSITORY} && \
+    cd OPT_Deadline && \
+    make OPT_COMMON_INCLUDE=${OPT_COMMON_HOME}/include && \
+    mkdir -p ${OPT_DEADLINE_HOME} && \
+    cp opt_deadline ${OPT_DEADLINE_HOME} && \
+    chown -R ${WSI_USER}:${WSI_USER} ${OPT_DEADLINE_HOME}
+    
 
 # Download and install Spark Parse Log
 RUN cd /tarball && \
