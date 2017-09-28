@@ -3,7 +3,6 @@ FROM ubuntu:16.04
 MAINTAINER biagio.festa[at]gmail.com
 
 ENV WSI_REPOSITORY https://github.com/eubr-bigsea/wsi.git
-ENV OPTIMIZE_REPOSITORY https://github.com/eubr-bigsea/opt_jr
 ENV WSI_VERSION 0.0.1-SNAPSHOT
 ENV TOMCAT_VERSION_MAJOR 7
 ENV TOMCAT_VERSION 7.0.79
@@ -13,8 +12,9 @@ ENV PATH $CATALINA_HOME/bin:$PATH
 ENV WSI_USER wsi
 ENV WSI_HOME /home/${WSI_USER}
 ENV WSI_CONFIG_FILE ${WSI_HOME}/wsi_config.xml
-ENV OPTIMIZE_HOME /opt/optimize
-ENV OPTIMIZE_CMD ${OPTIMIZE_HOME}/optimize
+ENV OPT_JR_REPOSITORY https://github.com/eubr-bigsea/opt_jr
+ENV OPT_JR_HOME /opt/opt_jr
+ENV OPT_JR_CMD ${OPT_JR_HOME}/optimize
 ENV WS_DAGSIM_REPOSITORY https://github.com/eubr-bigsea/WS_DagSim
 ENV DAGSIM_REPOSITORY https://github.com/eubr-bigsea/dagSim
 ENV DAGSIM_HOME /opt/dagSim
@@ -61,10 +61,10 @@ RUN useradd -ms /bin/bash ${WSI_USER} && \
 
 # Download and install optmizer
 RUN cd /tarball && \
-    git clone ${OPTIMIZE_REPOSITORY} && \
+    git clone ${OPT_JR_REPOSITORY} && \
     cd opt_jr && \
     make && \
-    install -D -o ${WSI_USER} -g ${WSI_USER} optimize ${OPTIMIZE_CMD}
+    install -D -o ${WSI_USER} -g ${WSI_USER} optimize ${OPT_JR_CMD}
 
 # Download and install DagSim
 RUN cd /tarball && \

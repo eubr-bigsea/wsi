@@ -101,7 +101,7 @@ public class OptProxy {
 		for (String appID : appIDs) {
 			// Prepare query
 			Statement stmt = conn.createStatement();
-			String query = "SELECT nu"
+			String query = "SELECT num_cores"
 					+ " FROM `" + OPT_TABLENAME + "`"
 					+ " WHERE opt_id = \"" + filename + "\" AND app_id = \"" + appID + "\";";
 			System.out.println(query);

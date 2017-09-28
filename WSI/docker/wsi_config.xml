@@ -8,12 +8,12 @@
 <entry key="OptDB_port">3306</entry>
 <entry key="DAGSIM_HOME">/opt/dagSim</entry>
 <entry key="LUNDSTROM_HOME">/opt/lundstrom</entry>
-<entry key="OPTIMIZE_HOME">/opt/optimize/optimize</entry>
+<entry key="OPTIMIZE_HOME">/opt/opt_jr/optimize</entry>
 <entry key="OptDB_user">bigsea</entry>
 <entry key="AppsPropDB_user">bigsea</entry>
 <entry key="AppsPropDB_IP">172.17.0.1</entry>
 <entry key="AppsPropDB_dbName">bigsea</entry>
-<entry key="OptDB_tablename">OPT_SESSIONS_RESULTS</entry>
+<entry key="OptDB_tablename">OPT_SESSIONS_RESULTS_TABLE</entry>
 <entry key="OptDB_IP">172.17.0.1</entry>
 <entry key="UPLOAD_HOME">/home/wsi/Uploaded</entry>
 <entry key="OptDB_pass">b1g534</entry>
