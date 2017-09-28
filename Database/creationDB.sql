@@ -35,6 +35,7 @@ CREATE TABLE `RUNNING_APPLICATION_TABLE` (
   `ending_time` TIMESTAMP DEFAULT 0,
   `weight` DOUBLE NOT NULL,
   `deadline` DOUBLE NOT NULL,
+  `num_cores` INT NOT NULL,
   PRIMARY KEY (`application_session_id`),
   FOREIGN KEY (`application_id`, `dataset_size`) REFERENCES `APPLICATION_PROFILE_TABLE`(`application_id`, `dataset_size`)
 );
@@ -54,7 +55,7 @@ CREATE TABLE `OPT_SESSIONS_RESULTS_TABLE` (
    `app_id` VARCHAR(100) NOT NULL,
    `num_cores` INT,
    `num_vm` INT,
-   PRIMARY KEY(`opt_id`, `app_id`)
+   PRIMARY KEY (`opt_id`, `app_id`)
 );
 
 CREATE TABLE `PREDICTOR_CACHE_TABLE` (
@@ -64,7 +65,7 @@ CREATE TABLE `PREDICTOR_CACHE_TABLE` (
    `stage` VARCHAR(10) NOT NULL,
    `is_residual` BOOLEAN DEFAULT TRUE,
    `val` DOUBLE NOT NULL,
-   PRIMARY KEY(`application_id`, `dataset_size`, `n_cores`, `stage`, `is_residual`,
-   FOREIGN KEY (`application_id`, `dataset_size`) REFERENCES `APPLICATION_PROFILE_TABLE`(`application_id`, `dataset_size`) 
+   PRIMARY KEY (`application_id`, `dataset_size`, `n_cores`, `stage`, `is_residual`),
+   FOREIGN KEY (`application_id`, `dataset_size`) REFERENCES `APPLICATION_PROFILE_TABLE`(`application_id`, `dataset_size`)
 );
 

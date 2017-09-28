@@ -21,9 +21,10 @@ INSERT INTO `RUNNING_APPLICATION_TABLE` (
   `submission_time`,
   `status`,
   `weight`,
-  `deadline`)
-    VALUES ('application_1483347394756_0', 'Q26', 500, CURRENT_TIMESTAMP, 'RUNNING', 3.14, 100),
-           ('application_1483347394756_1', 'Q52', 500, CURRENT_TIMESTAMP, 'RUNNING', 3.14, 100);
+  `deadline`,
+  `num_cores`)
+    VALUES ('application_1483347394756_0', 'Q26', 500, CURRENT_TIMESTAMP, 'RUNNING', 3.14, 100, 4),
+           ('application_1483347394756_1', 'Q52', 500, CURRENT_TIMESTAMP, 'RUNNING', 3.14, 100, 4);
 
 INSERT INTO `OPTIMIZER_CONFIGURATION_TABLE` (
   `application_id`,
