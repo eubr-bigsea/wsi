@@ -65,7 +65,7 @@ CREATE TABLE `PREDICTOR_CACHE_TABLE` (
    `stage` VARCHAR(10) NOT NULL,
    `is_residual` BOOLEAN DEFAULT TRUE,
    `val` DOUBLE NOT NULL,
-   PRIMARY KEY (`application_id`, `dataset_size`, `n_cores`, `stage`, `is_residual`),
+   PRIMARY KEY (`application_id`, `dataset_size`, `num_cores`, `stage`, `is_residual`),
    FOREIGN KEY (`application_id`, `dataset_size`) REFERENCES `APPLICATION_PROFILE_TABLE`(`application_id`, `dataset_size`)
 );
 
