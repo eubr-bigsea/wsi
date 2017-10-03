@@ -52,7 +52,6 @@ public class DBQuery {
 		query_str += " WHERE `application_session_id` = \"" + application_session_id + "\"";
 		query_str += ";";
 		System.out.println(query_str);
-		
 		ResultSet result = stmt.executeQuery(query_str);
 		
 		if (result.next()) {

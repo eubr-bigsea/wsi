@@ -24,6 +24,7 @@ public class AppParams {
 	private double weight;
 	private double deadline;
 	private String stage_id;
+	private double N;
 	
 	public AppParams(String parsable_string) throws Exception {
 		try {
@@ -32,11 +33,13 @@ public class AppParams {
 			String weight_str = st.nextToken(delimiter_token);
 			String deadline_str = st.nextToken(delimiter_token);
 			String stage_id = st.nextToken(delimiter_token);
+			String N = st.nextToken(delimiter_token);
 			
 			this.app_session_id = app_session_id;
 			this.weight = Double.parseDouble(weight_str);
 			this.deadline = Double.parseDouble(deadline_str);
 			this.stage_id = stage_id;
+			this.N = Double.parseDouble(N);
 		} catch (NoSuchElementException err) {
 			throw new Exception("Impossible to parse the app parameters");
 		}
@@ -54,6 +57,10 @@ public class AppParams {
 		return deadline;
 	}
 	
+	public double getN() {
+		return N;
+	}
+
 	public String getStageID() {
 		return stage_id;
 	}

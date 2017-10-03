@@ -76,17 +76,19 @@ public class SessionManager {
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response setCalls(
 			@DefaultValue("none") @QueryParam("SID") String sessionToken,
-			@DefaultValue("-1") @QueryParam("ncalls") int numberOfCalls,
-			@DefaultValue("-1") @QueryParam("ncores") int numberOfCores) {
+			@DefaultValue("-1") @QueryParam("ncalls") int numberOfCalls
+			//@DefaultValue("-1") @QueryParam("ncores") int numberOfCores) {
+			) {
 		Session session = sessions.get(sessionToken);
 		if (session == null) {
 			return Response.status(Status.UNAUTHORIZED).entity("Error. Token not identified").build();
 		}
-		if (numberOfCalls == -1 || numberOfCores == -1) {
+		//if (numberOfCalls == -1 || numberOfCores == -1) {
+		if (numberOfCalls == -1 ) {
 			return Response.status(Status.BAD_REQUEST).entity("Error. Parameters not properly configured").build();
 		}
 		session.setNumberOfCalls(numberOfCalls);
-		session.setNumberOfCoresAvail(numberOfCores);
+		//session.setNumberOfCoresAvail(numberOfCores);
 		return Response.status(Status.OK).entity("OK. Numbers have been set").build();
 	}
 	
@@ -108,7 +110,7 @@ public class SessionManager {
 				return Response.status(Status.OK).entity("OK. AppParams have been set. " + 
 						String.valueOf(remain_calls) + " remain to set").build();
 			} else {
-				String opt_results = session.getOptResults();
+				String opt_results = session.getOptResults(newparams.getN());
 				sessions.remove(sessionToken);
 				return Response.status(Status.OK).entity(opt_results).build();
 			}

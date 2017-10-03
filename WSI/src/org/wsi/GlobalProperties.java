@@ -32,7 +32,7 @@ public class GlobalProperties {
 	public String OptDB_IP = "localhost";
 	public String OptDB_port = "3306";
 	public String OptDB_dbName = "150test";
-	public String OptDB_tablename = "OPT_SESSIONS_RESULTS";
+	public String OptDB_tablename = "OPT_SESSIONS_RESULTS_TABLE";
 	public String OptDB_user = "root";
 	public String OptDB_pass = "biagio";
 	

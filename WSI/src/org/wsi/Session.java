@@ -63,7 +63,7 @@ public class Session {
 		return sessionToken;
 	}
 	
-	public String getOptResults() 
+	public String getOptResults(double N) 
 			throws RuntimeException, ClassNotFoundException, IOException, InterruptedException, SQLException {
 		if (appsParams.size() != numberOfCalls) {
 			new RuntimeException("Number of applications set should be " 
@@ -80,7 +80,8 @@ public class Session {
 		}
 		
 		// call opt
-		String opt_results = new OptProxy().invoke_opt(input_csv, String.valueOf(numberOfCoresAvail));
+		//String opt_results = new OptProxy().invoke_opt(input_csv, String.valueOf(numberOfCoresAvail));
+		String opt_results = new OptProxy().invoke_opt(input_csv, String.valueOf(N));
 		return opt_results;
 	}
 	
@@ -89,7 +90,8 @@ public class Session {
 		for (int i = 0; i < numberOfCalls; ++i) {
 			AppParams params = appsParams.get(i);
 			queryApp queryResult = new DBQuery().get_information_from_session_id(params.getApp_session_id());
-			String csv_row = queryResult.application_id + ","
+		//	String csv_row = queryResult.application_id + ","
+			String csv_row = params.getApp_session_id() + "," + queryResult.application_id + ","
 					+ params.getWeight() + ","
 					+ queryResult.chi_0 + ","
 					+ queryResult.chi_c + ","

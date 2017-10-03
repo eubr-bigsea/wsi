@@ -61,7 +61,8 @@ public class OptProxy {
 		file_buffer.close();
 		
 		// Execute opt
-		String cmd_to_exec = OPT_CMD + " " + filename + " " + num_avil_cores;
+		//String cmd_to_exec = OPT_CMD + " " + filename + " " + num_avil_cores;
+		String cmd_to_exec = OPT_CMD + " -f=" + filename + " -n=" + num_avil_cores + " -i=10  -k=0 -d=n -s=dagSim -g=n";
 		Runtime rt = Runtime.getRuntime();
 		Process opt_process = rt.exec(cmd_to_exec);
 		System.out.println("Executing: '" + cmd_to_exec + "'");
