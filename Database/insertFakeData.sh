@@ -8,7 +8,7 @@ DOCKER_CONTAINER_NAME=mysql_bigsea
 DOCKER_MYSQL_PORT=3306
 MYSQL_DATABASE=bigsea
 
-echo "Insertion Fake Data into Docker container: `${DOCKER_CONTAINER_NAME}`"
+echo "Insertion Fake Data into Docker container: ${DOCKER_CONTAINER_NAME}"
 echo -n "User Password: "
 read -s user_db_password
 
