@@ -14,7 +14,7 @@ ENV WSI_HOME /home/${WSI_USER}
 ENV WSI_CONFIG_FILE ${WSI_HOME}/wsi_config.xml
 ENV OPT_JR_REPOSITORY https://github.com/eubr-bigsea/opt_jr
 ENV OPT_JR_HOME /opt/opt_jr
-ENV OPT_JR_CMD ${OPT_JR_HOME}/optimize
+ENV OPT_JR_CMD ${OPT_JR_HOME}/OPT_JR
 ENV WS_DAGSIM_REPOSITORY https://github.com/eubr-bigsea/WS_DagSim
 ENV DAGSIM_REPOSITORY https://github.com/eubr-bigsea/dagSim
 ENV DAGSIM_HOME /opt/dagSim
@@ -34,7 +34,7 @@ ENV SPARK_LOG_PARSER_HOME /opt/SparkLogParser
 ENV WSI_PASSWORD w51p455w0rd
 
 # Install environment dependencies
-RUN apt-get update && apt-get install -y nano vim git maven openjdk-8-jdk wget make gcc libmysqlclient-dev liblua5.3-dev python2.7 python vsftpd
+RUN apt-get update && apt-get install -y nano vim git maven openjdk-8-jdk wget make gcc libmysqlclient-dev liblua5.3-dev python2.7 python vsftpd curl
 
 # Install tomcat in ${CATALINA_HOME}
 RUN mkdir /tarball && \
@@ -64,7 +64,8 @@ RUN cd /tarball && \
     git clone ${OPT_JR_REPOSITORY} && \
     cd opt_jr && \
     make && \
-    install -D -o ${WSI_USER} -g ${WSI_USER} optimize ${OPT_JR_CMD}
+    mkdir -p ${OPT_JR_HOME} && \
+    install -D -o ${WSI_USER} -g ${WSI_USER} OPT_JR ${OPT_JR_CMD}
 
 # Download and install DagSim
 RUN cd /tarball && \
@@ -155,9 +156,9 @@ WORKDIR ${WSI_HOME}
 RUN mkdir ${WSI_HOME}/Uploaded
 
 # Copy example datas
-RUN cp /tarball/OPT_DATA_CONFIG/TPCDS500-D_processed_logs.tar.gz ${EXAMPLE_DATA_HOME} && \
+RUN cp /tarball/OPT_DATA_CONFIG/LogP8.tar.gz ${EXAMPLE_DATA_HOME} && \
     cd ${EXAMPLE_DATA_HOME} && \
-    tar -zxvf TPCDS500-D_processed_logs.tar.gz -C ..
+    tar -zxvf LogP8.tar.gz -C ..
 
 EXPOSE 8080
 
