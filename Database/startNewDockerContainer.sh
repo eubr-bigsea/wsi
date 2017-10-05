@@ -36,7 +36,6 @@ docker run -d --name ${DOCKER_CONTAINER_NAME} -e MYSQL_ROOT_PASSWORD=${MYSQL_ROO
            -e MYSQL_DATABASE=${MYSQL_DATABASE} -p ${DOCKER_MYSQL_PORT}:3306 mysql:latest && \
     until_conn && \
     docker cp ${DIR}/creationDB.sql ${DOCKER_CONTAINER_NAME}:/ && \
-    docker cp ${DIR}/insertFakeData.sql ${DOCKER_CONTAINER_NAME}:/ && \
     docker cp ${DIR}/importSQL.sh ${DOCKER_CONTAINER_NAME}:/ && \
     docker exec -it ${DOCKER_CONTAINER_NAME} chmod u+x /importSQL.sh && \
     docker exec -it ${DOCKER_CONTAINER_NAME} mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "create user '${MYSQL_USER}'@'%' identified by '${MYSQL_USER_PASSWORD}';" && \
