@@ -18,6 +18,7 @@ WSI_HOME=${DIR}/WSI
 SCRIPT_CREATE_DB=${DATABASE_HOME}/startNewDockerContainer.sh
 DB_ADMIN_PASS=
 DB_USER_PASS=
+WSI_SERVICE_PORT=8080
 
 function create_database {
     echo "Creation Database"
@@ -96,6 +97,7 @@ function build_services {
     rm -rf ${DIR_TEMP}
     echo "Launch container"
     # TODO
+    docker run --name wsi_service -d -p ${WSI_SERVICE_PORT}:8080 wsi
     return 0
 }
 
