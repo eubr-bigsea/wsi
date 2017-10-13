@@ -28,7 +28,7 @@ ENV OPT_IC_HOME /opt/OPT_IC
 ENV OPT_DEADLINE_REPOSITORY https://github.com/eubr-bigsea/OPT_Deadline
 ENV OPT_DEADLINE_HOME /opt/OPT_Deadline
 ENV OPT_DATA_CONFIG https://github.com/eubr-bigsea/OPT_DATA_CONFIG
-ENV EXAMPLE_DATA_HOME /home/work/TPCDS500-D_processed_logs
+ENV EXAMPLE_DATA_HOME /home/work/
 ENV SPARK_LOG_PARSER_REPO https://github.com/eubr-bigsea/SparkLogParser
 ENV SPARK_LOG_PARSER_HOME /opt/SparkLogParser
 ENV WSI_PASSWORD w51p455w0rd
@@ -156,12 +156,11 @@ WORKDIR ${WSI_HOME}
 RUN mkdir ${WSI_HOME}/Uploaded
 
 # Copy example datas
-RUN cp /tarball/OPT_DATA_CONFIG/LogP8.tar.gz ${EXAMPLE_DATA_HOME} && \
-    cd ${EXAMPLE_DATA_HOME} && \
-    tar -zxvf LogP8.tar.gz -C ..
+RUN cd ${EXAMPLE_DATA_HOME} && \
+    tar -zxvf /tarball/OPT_DATA_CONFIG/LogP8.tar.gz
 
 EXPOSE 8080
 
 # Default command launch tomcat
 CMD ["catalina.sh", "run"]
-    
+
