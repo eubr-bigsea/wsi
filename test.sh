@@ -55,7 +55,11 @@ if test -d test_temp; then
    rm -r test_temp;
 fi
 mkdir test_temp
-
+docker cp ${DOCKER_WS_CONTAINER_NAME}:/tarball/WS_DagSim/ExampleScripts/call_opt_ic_stage.sh ${dir_script}/test_temp
+result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
+echo "Result of call_opt_ic_stage.sh is $result"
+result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
+echo "Result of call_opt_ic_stage.sh is $result"
 
 
 ################################################################################
@@ -97,6 +101,10 @@ do
    fi
 done
 echo "Found correct value for application_id query55 - dataset 1000 - deadline 500300: 21"
+result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
+echo "Result of call_opt_ic_stage.sh is $result"
+result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
+echo "Result of call_opt_ic_stage.sh is $result"
 
 waited_minutes=0
 while :
@@ -119,6 +127,10 @@ do
    fi
 done
 echo "Found correct value for application_id query55 - dataset 1000 - deadline 650100: 16"
+result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
+echo "Result of call_opt_ic_stage.sh is $result"
+result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
+echo "Result of call_opt_ic_stage.sh is $result"
 
 waited_minutes=0
 while :
@@ -141,6 +153,10 @@ do
    fi
 done
 echo "Found correct value for application_id query55 - dataset 1000 - deadline 799900: 13"
+result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
+echo "Result of call_opt_ic_stage.sh is $result"
+result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
+echo "Result of call_opt_ic_stage.sh is $result"
 
 
 
@@ -165,31 +181,53 @@ result=`${dir_script}/test_temp/call_R_dagsim.sh`
 echo "Result of call_R_dagsim is $result"
 golden_result="597405.186 68.45608337878 597400.94304799 597409.42895201 1.4204603862178e-05"
 compare_result
+result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
+echo "Result of call_opt_ic_stage.sh is $result"
+result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
+echo "Result of call_opt_ic_stage.sh is $result"
 
 result=`${dir_script}/test_temp/call_S_dagsim.sh`
 echo "Result of call_S_dagsim is $result"
 golden_result="444221.372 71.42999126658 444216.94472327 444225.79927673 1.9932749776369e-05"
 compare_result
+result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
+echo "Result of call_opt_ic_stage.sh is $result"
+result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
+echo "Result of call_opt_ic_stage.sh is $result"
 
 result=`${dir_script}/test_temp/call_dagsim.sh`
 echo "Result of call_dagsim is $result"
 golden_result="444221.372 71.42999126658 444216.94472327 444225.79927673 1.9932749776369e-05"
 compare_result
+result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
+echo "Result of call_opt_ic_stage.sh is $result"
+result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
+echo "Result of call_opt_ic_stage.sh is $result"
 
 result=`${dir_script}/test_temp/call_dagsim_stage.sh`
 echo "Result of call_dagsim is_stage $result"
 golden_result="3213 22941"
 compare_result
+result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
+echo "Result of call_opt_ic_stage.sh is $result"
+result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
+echo "Result of call_opt_ic_stage.sh is $result"
 
 result=`${dir_script}/test_temp/call_opt_ic.sh`
 echo "Result of call_opt_ic.sh is $result"
 golden_result="36 5"
 compare_result
+result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
+echo "Result of call_opt_ic_stage.sh is $result"
+result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
+echo "Result of call_opt_ic_stage.sh is $result"
 
 result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
 echo "Result of call_opt_ic_stage.sh is $result"
 golden_result="4 1 2759000"
 compare_result
+result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
+echo "Result of call_opt_ic_stage.sh is $result"
 
 waited_minutes=0
 while :
