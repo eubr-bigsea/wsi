@@ -21,6 +21,9 @@ public class AppSession {
 	public double dataset_size;
 	public long submission_time;
 	public long ending_time;
+        public double weight;
+        public double deadline;
+        public int num_cores;
 	
 	public void print_info_on_log() {
 		String dump = "-----APP SESSION INSTANCE------\n" +
@@ -28,7 +31,10 @@ public class AppSession {
 					  "Application ID: " + application_id + "\n" +
 					  "Dataset Size: " + dataset_size + "\n" +
 					  "Submission Time: " + submission_time + "\n" +
-					  "Ending Time: " + ending_time + "\n";
+					  "Ending Time: " + ending_time + "\n" +
+					  "Weight: " + weight + "\n" +
+					  "Deadline: " + deadline + "\n" +
+					  "Number of cores: " + num_cores + "\n"; 
 		System.out.println(dump);
 	}
 }
