@@ -4,6 +4,7 @@ MAINTAINER biagio.festa[at]gmail.com
 
 ENV WSI_REPOSITORY https://github.com/eubr-bigsea/wsi.git
 ENV WSI_VERSION 0.0.1-SNAPSHOT
+ENV WSI_DB_VERSION 0.0.1-SNAPSHOT
 ENV TOMCAT_VERSION_MAJOR 7
 ENV TOMCAT_VERSION 7.0.79
 ENV TOMCAT_REPO http://archive.apache.org/dist/tomcat
@@ -52,7 +53,13 @@ RUN cd /tarball && \
     mvn initialize && \
     mvn compile && \
     mvn package && \
-    cp target/WSI-${WSI_VERSION}.war /opt/apache-tomcat-${TOMCAT_VERSION}/webapps/WSI.war
+    cp target/WSI-${WSI_VERSION}.war /opt/apache-tomcat-${TOMCAT_VERSION}/webapps/WSI.war && \
+    cd /tarball/wsi/WSI_DB && \
+    mvn initialize && \
+    mvn compile && \
+    mvn package && \
+    cp target/WSI_DB-${WSI_DB_VERSION}.war /opt/apache-tomcat-${TOMCAT_VERSION}/webapps/WSI_DB.war
+
 
 # Create user ${WSI_USER} and give him privileges on ${CATALINA_HOME} (tomcat install directory)
 RUN useradd -ms /bin/bash ${WSI_USER} && \
