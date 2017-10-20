@@ -176,17 +176,17 @@ chmod a+x ${dir_script}/test_temp/*
 
 result=`${dir_script}/test_temp/call_R_dagsim.sh`
 echo "Result of call_R_dagsim is $result"
-golden_result="597405.186 68.45608337878 597400.94304799 597409.42895201 1.4204603862178e-05"
+golden_result="597405"
 compare_result || exit $?
 
 result=`${dir_script}/test_temp/call_S_dagsim.sh`
 echo "Result of call_S_dagsim is $result"
-golden_result="444221.372 71.42999126658 444216.94472327 444225.79927673 1.9932749776369e-05"
+golden_result="444221"
 compare_result || exit $?
 
 result=`${dir_script}/test_temp/call_dagsim.sh`
 echo "Result of call_dagsim is $result"
-golden_result="444221.372 71.42999126658 444216.94472327 444225.79927673 1.9932749776369e-05"
+golden_result="444221"
 compare_result || exit $?
 
 result=`${dir_script}/test_temp/call_dagsim_stage.sh`
