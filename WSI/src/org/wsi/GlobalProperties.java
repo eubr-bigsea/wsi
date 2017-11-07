@@ -39,6 +39,7 @@ public class GlobalProperties {
 	public String DAGSIM_HOME = "/home/work/Dagsim";
 	public String RESULTS_HOME = "/home/work/TPCDS500-D_processed_logs";
 	public String OPTIMIZE_HOME = "/home/work/Optimize/optimize";
+	public String OPTIMIZE_NUM_PROCESSES = "1";
 	public String RESOPT_HOME = "/home/work/ResOpt";
 	public String LUNDSTROM_HOME = "/home/work/spark-lundstrom-master";
 	public String UPLOAD_HOME = "/home/work/Uploaded";
@@ -90,6 +91,7 @@ public class GlobalProperties {
 		DAGSIM_HOME = global_properties.getProperty("DAGSIM_HOME");
 		RESULTS_HOME = global_properties.getProperty("RESULTS_HOME");
 		OPTIMIZE_HOME = global_properties.getProperty("OPTIMIZE_HOME");
+		OPTIMIZE_NUM_PROCESSES = global_properties.getProperty("OPTIMIZE_NUM_PROCESSES");
 		RESOPT_HOME = global_properties.getProperty("RESOPT_HOME");
 		LUNDSTROM_HOME = global_properties.getProperty("LUNDSTROM_HOME");
 		UPLOAD_HOME = global_properties.getProperty("UPLOAD_HOME");
