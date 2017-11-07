@@ -41,7 +41,7 @@ public class OptProxy {
 	
 	public String invoke_opt(String csv_input, String num_avil_cores) 
 			throws IOException, InterruptedException, ClassNotFoundException, SQLException, RuntimeException {
-		final String OPT_CMD = SessionManager.global_properties.OPTIMIZE_HOME;
+		final String OPT_CMD = "mpirun -n " + SessionManager.global_properties.OPTIMIZE_NUM_PROCESSES + " " +  SessionManager.global_properties.OPTIMIZE_HOME;
 		final String PathFileCSV = SessionManager.global_properties.UPLOAD_HOME;
 			
 		String filename = UUID.randomUUID().toString() + ".csv";
@@ -62,7 +62,7 @@ public class OptProxy {
 		
 		// Execute opt
 		//String cmd_to_exec = OPT_CMD + " " + filename + " " + num_avil_cores;
-		String cmd_to_exec = OPT_CMD + " -f=" + filename + " -n=" + num_avil_cores + " -i=10  -k=0 -d=n -s=dagSim -g=n";
+		String cmd_to_exec = OPT_CMD + " -f=" + filename + " -n=" + num_avil_cores + " -i=10  -k=0 -d=n -s=dagSim -g=n -c=y";
 		Runtime rt = Runtime.getRuntime();
 		Process opt_process = rt.exec(cmd_to_exec);
 		System.out.println("Executing: '" + cmd_to_exec + "'");
