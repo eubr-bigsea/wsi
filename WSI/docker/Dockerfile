@@ -35,7 +35,7 @@ ENV SPARK_LOG_PARSER_HOME /opt/SparkLogParser
 ENV WSI_PASSWORD w51p455w0rd
 
 # Install environment dependencies
-RUN apt-get update && apt-get install -y nano vim git maven openjdk-8-jdk wget make gcc libmysqlclient-dev liblua5.3-dev python2.7 python vsftpd curl
+RUN apt-get update && apt-get install -y nano vim git maven openjdk-8-jdk wget make gcc libmysqlclient-dev liblua5.3-dev python2.7 python vsftpd curl openmpi-bin openmpi-doc libopenmpi-dev
 
 # Install tomcat in ${CATALINA_HOME}
 RUN mkdir /tarball && \
@@ -69,7 +69,7 @@ RUN useradd -ms /bin/bash ${WSI_USER} && \
 # Download and install optmizer
 RUN cd /tarball && \
     git clone ${OPT_JR_REPOSITORY} && \
-    cd opt_jr && \
+    cd opt_jr/Release && \
     make && \
     mkdir -p ${OPT_JR_HOME} && \
     install -D -o ${WSI_USER} -g ${WSI_USER} OPT_JR ${OPT_JR_CMD}
