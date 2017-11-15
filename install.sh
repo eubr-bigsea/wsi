@@ -60,7 +60,7 @@ function build_services {
     fi
     mkdir ws_docker_temp
     echo "Configuration..."
-    sed "s/<entry key=\"AppsPropDB_pass\">.*<\/entry>/<entry key=\"AppsPropDB_pass\">${MYSQL_PASSWORD}<\/entry>/g; s/<entry key=\"OptDB_pass\">.*<\/entry>/<entry key=\"OptDB_pass\">${MYSQL_PASSWORD}<\/entry>/g" ${WSI_HOME}/docker/wsi_config.xml > ${DIR_TEMP}/wsi_config.xml
+    sed "s/<entry key=\"DB_pass\">.*<\/entry>/<entry key=\"DB_pass\">${MYSQL_PASSWORD}<\/entry>/g; s/<entry key=\"DB_pass\">.*<\/entry>/<entry key=\"DB_pass\">${MYSQL_PASSWORD}<\/entry>/g" ${WSI_HOME}/docker/wsi_config.xml > ${DIR_TEMP}/wsi_config.xml
     cp ${WSI_HOME}/docker/Dockerfile ${DIR_TEMP}/Dockerfile
 
     echo "Build docker image for services..."

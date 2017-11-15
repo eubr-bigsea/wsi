@@ -17,7 +17,7 @@ DOCKER_MYSQL_PORT=3306
 MYSQL_DATABASE=bigsea
 
 echo "Insertion Fake Data into Docker container: ${DOCKER_DB_CONTAINER_NAME}"
-grep_command="grep OptDB_pass wsi_config.xml"
+grep_command="grep DB_pass wsi_config.xml"
 password_line=`docker exec ${DOCKER_WS_CONTAINER_NAME} /bin/bash -c "${grep_command}"`
 user_db_password=`echo $password_line | awk -F\> {'print $2'} | awk -F\< {'print $1'}`
 

@@ -4,21 +4,16 @@
 <comment/>
 <entry key="RESOPT_HOME">/opt/OPT_IC</entry>
 <entry key="RESULTS_HOME">/home/work/LogP8</entry>
-<entry key="AppsPropDB_port">3306</entry>
-<entry key="OptDB_port">3306</entry>
+<entry key="DB_port">3306</entry>
 <entry key="DAGSIM_HOME">/opt/dagSim</entry>
 <entry key="LUNDSTROM_HOME">/opt/lundstrom</entry>
 <entry key="OPTIMIZE_HOME">/opt/opt_jr/OPT_JR</entry>
 <entry key="THREADS_NUMBER">1</entry>
 <entry key="OPTIMIZE_NUM_PROCESSES">1</entry>
-<entry key="OptDB_user">bigsea</entry>
-<entry key="AppsPropDB_user">bigsea</entry>
-<entry key="AppsPropDB_IP">172.17.0.1</entry>
-<entry key="AppsPropDB_dbName">bigsea</entry>
+<entry key="DB_user">bigsea</entry>
+<entry key="DB_IP">172.17.0.1</entry>
+<entry key="DB_dbName">bigsea</entry>
 <entry key="OptDB_tablename">OPT_SESSIONS_RESULTS_TABLE</entry>
-<entry key="OptDB_IP">172.17.0.1</entry>
 <entry key="UPLOAD_HOME">/home/wsi/Uploaded</entry>
-<entry key="OptDB_pass">b1g534</entry>
-<entry key="AppsPropDB_pass">b1g534</entry>
-<entry key="OptDB_dbName">bigsea</entry>
+<entry key="DB_pass">b1g534</entry>
 </properties>

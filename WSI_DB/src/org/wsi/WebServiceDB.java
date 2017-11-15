@@ -160,15 +160,15 @@ public class WebServiceDB {
 	}
 	
 	private void readConfiguration() {
-		String address_db_server = readWsConfig("AppsPropDB_IP");
-		String port_db_server = readWsConfig("OptDB_port");
-		String database_name = readWsConfig("AppsPropDB_dbName");
+		String address_db_server = readWsConfig("DB_IP");
+		String port_db_server = readWsConfig("DB_port");
+		String database_name = readWsConfig("DB_dbName");
 		
 		db_url = "jdbc:mysql://" + address_db_server + ":" 
 				+ port_db_server  + "/" + database_name
 				+ "?useSSL=false";
-		db_user = readWsConfig("AppsPropDB_user");
-		db_password = readWsConfig("AppsPropDB_pass");
+		db_user = readWsConfig("DB_user");
+		db_password = readWsConfig("DB_pass");
 	}
 
 	public String readWsConfig(String variable)

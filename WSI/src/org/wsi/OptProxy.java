@@ -30,12 +30,12 @@ import java.util.UUID;
 
 public class OptProxy {
 	// DB configuration
-	private final static String DB_IP = SessionManager.global_properties.OptDB_IP;
-	private final static String DB_NAME_DB = SessionManager.global_properties.OptDB_dbName;
+	private final static String DB_IP = SessionManager.global_properties.DB_IP;
+	private final static String DB_NAME_DB = SessionManager.global_properties.DB_dbName;
 	private final static String DB_URL = "jdbc:mysql://" + DB_IP + ":" 
-							+ SessionManager.global_properties.OptDB_port + "/" + DB_NAME_DB + "?useSSL=false";
-	private final static String USER_DB = SessionManager.global_properties.OptDB_user;
-	private final static String PASS_DB = SessionManager.global_properties.OptDB_pass;
+							+ SessionManager.global_properties.DB_port + "/" + DB_NAME_DB + "?useSSL=false";
+	private final static String USER_DB = SessionManager.global_properties.DB_user;
+	private final static String PASS_DB = SessionManager.global_properties.DB_pass;
 	private final static String OPT_TABLENAME = SessionManager.global_properties.OptDB_tablename;
 	private final static String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 	

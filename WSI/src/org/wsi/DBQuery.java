@@ -26,12 +26,12 @@ import java.util.List;
 public class DBQuery {
 	private final static String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 	
-	private final static String DB_URL = "jdbc:mysql://" + SessionManager.global_properties.AppsPropDB_IP + ":" 
-					+ SessionManager.global_properties.AppsPropDB_port  + "/" + SessionManager.global_properties.AppsPropDB_dbName
+	private final static String DB_URL = "jdbc:mysql://" + SessionManager.global_properties.DB_IP + ":" 
+					+ SessionManager.global_properties.DB_port  + "/" + SessionManager.global_properties.DB_dbName
 					+ "?useSSL=false";
 	
-	private final static String USER_DB = SessionManager.global_properties.AppsPropDB_user;
-	private final static String PASS_DB = SessionManager.global_properties.AppsPropDB_pass;
+	private final static String USER_DB = SessionManager.global_properties.DB_user;
+	private final static String PASS_DB = SessionManager.global_properties.DB_pass;
 	private final static String APPLICATIONS_TABLE = "APPLICATION_PROFILE_TABLE";
 	private final static String RUNNINGS_TABLE = "RUNNING_APPLICATION_TABLE";
 	

@@ -102,7 +102,7 @@ time.sleep(5)
 exec_instance = cli.exec_create(container="wsi_service", cmd="cat wsi_config.xml")
 xml_string = cli.exec_start(exec_id=exec_instance, stream=True).next()
 root_xml = xml.etree.ElementTree.fromstring(xml_string)
-mysql_password = root_xml.findall("./entry[@key='OptDB_pass']")[0].text
+mysql_password = root_xml.findall("./entry[@key='DB_pass']")[0].text
 logging.info("xml_string is " + str(mysql_password))
 
 #Connect to mysql
