@@ -16,46 +16,16 @@ DOCKER_BIN=$(which docker)
 DATABASE_HOME=${DIR}/Database
 WSI_HOME=${DIR}/WSI
 SCRIPT_CREATE_DB=${DATABASE_HOME}/startNewDockerContainer.sh
-DB_ADMIN_PASS=
-DB_USER_PASS=
+MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-b1g534}
+MYSQL_USER=${MYSQL_USER:-bigsea}
+MYSQL_PASSWORD=${MYSQL_PASSWORD:-b1g534}
 WSI_SERVICE_PORT=${WSI_SERVICE_PORT:-8080}
 
+DIR_TEMP=ws_docker_temp
+
 function create_database {
-    echo "Creation Database"
-    echo -n "Root Password: "
-    read -s root_db_password
-    echo
-    echo -n "Repeat Password: "
-    read -s root_db_password_2
-    echo
-    if [ "$root_db_password" != "$root_db_password_2" ];
-    then
-        echo "Password does not match"
-        exit -1
-    fi
-    DB_ADMIN_PASS=${root_db_password}
-    
-    echo -n "User Password: "
-    read -s user_db_password
-    echo
-    echo -n "Repeat Password: "
-    read -s user_db_password_2
-    echo
-    if [ "$user_db_password" != "$user_db_password_2" ];
-    then
-        echo "Password does not match"
-        exit -1
-    fi
-    DB_USER_PASS=${user_db_password}
-    
-    DIR_TEMP=$(mktemp -d ${DIR}/XXXXX)
-    echo "Create temporary directory ${DIR_TEMP}"
-    cp -r ${DATABASE_HOME}/* ${DIR_TEMP}
-    NAME_TEMP=${DIR_TEMP}/create_db_script.tmp
-    cat ${SCRIPT_CREATE_DB} | sed "s|MYSQL_ROOT_PASSWORD=4dm1n|MYSQL_ROOT_PASSWORD=${root_db_password}|g; s|MYSQL_USER_PASSWORD=b1g534|MYSQL_USER_PASSWORD=${user_db_password}|g" > ${NAME_TEMP}
-    ${BASH_BIN} ${NAME_TEMP}
-    echo "Delete temporary directory"
-    rm -rf ${DIR_TEMP}
+
+    MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD} MYSQL_USER=${MYSQL_USER} MYSQL_PASSWORD=${MYSQL_PASSWORD} ${SCRIPT_CREATE_DB}
 
     return 0
 }
@@ -85,16 +55,18 @@ function delete_services {
 }
 
 function build_services {
-    DIR_TEMP=$(mktemp -d ${DIR}/XXXXX)
-    echo "Create temporary directory ${DIR_TEMP}"
+    if test -d ws_docker_temp; then
+       rm -r ws_docker_temp;
+    fi
+    mkdir ws_docker_temp
     echo "Configuration..."
-    sed "s/<entry key=\"AppsPropDB_pass\">.*<\/entry>/<entry key=\"AppsPropDB_pass\">${DB_USER_PASS}<\/entry>/g; s/<entry key=\"OptDB_pass\">.*<\/entry>/<entry key=\"OptDB_pass\">${DB_USER_PASS}<\/entry>/g" ${WSI_HOME}/docker/wsi_config.xml > ${DIR_TEMP}/wsi_config.xml
+    sed "s/<entry key=\"AppsPropDB_pass\">.*<\/entry>/<entry key=\"AppsPropDB_pass\">${MYSQL_PASSWORD}<\/entry>/g; s/<entry key=\"OptDB_pass\">.*<\/entry>/<entry key=\"OptDB_pass\">${MYSQL_PASSWORD}<\/entry>/g" ${WSI_HOME}/docker/wsi_config.xml > ${DIR_TEMP}/wsi_config.xml
     cp ${WSI_HOME}/docker/Dockerfile ${DIR_TEMP}/Dockerfile
 
     echo "Build docker image for services..."
     docker build --no-cache --force-rm -t wsi ${DIR_TEMP}
     echo "Delete temporary directory"
-    rm -rf ${DIR_TEMP}
+    rm -rf ws_docker_temp
     echo "Launch container"
     # TODO
     docker run --name wsi_service -d -p ${WSI_SERVICE_PORT}:8080 wsi
