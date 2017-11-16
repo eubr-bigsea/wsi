@@ -45,7 +45,7 @@ public class GlobalProperties {
 		global_properties.setProperty("DB_IP", DB_IP);
 		global_properties.setProperty("DB_port", DB_port);
 		global_properties.setProperty("DB_dbName", DB_dbName);
-		global_properties.setProperty("DB_user", AppsPropDB_user);
+		global_properties.setProperty("DB_user", DB_user);
 		global_properties.setProperty("DB_pass", DB_pass);
 		
 		global_properties.setProperty("OptDB_tablename", OptDB_tablename);
