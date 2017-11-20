@@ -1,0 +1,49 @@
+{
+  "id": "/polimi/polimi-db",
+  "cmd": null,
+  "cpus": 1,
+  "mem": 999,
+  "disk": 6000,
+  "instances": 1,
+  "healthChecks": [{
+      "protocol": "TCP",
+      "path": "/",
+      "portIndex": 0,
+      "timeoutSeconds": 10,
+      "gracePeriodSeconds": 10,
+      "intervalSeconds": 2,
+      "maxConsecutiveFailures": 10
+  }],
+  "container": {
+    "docker": {
+      "image": "bsintserver:5000/polimi_mysql",
+      "forcePullImage": true,
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 3306,
+          "hostPort": 0,
+          "servicePort": 10057,
+          "protocol": "tcp",
+          "name": "10057",
+          "labels": null
+        }
+      ]
+    },
+    "type": "DOCKER",
+    "volumes": []
+  },
+  "labels": {
+    "HAPROXY_GROUP": "internal",
+    "HAPROXY_0_MODE": "tcp",
+    "HAPROXY_0_BACKEND_HEAD":"backend {backend}\n  balance {balance}\n  mode {mode}\n  timeout server 30m\n  timeout client 30m\n"
+  },
+  "portDefinitions": [
+    {
+      "port": 10057,
+      "protocol": "tcp",
+      "labels": {}
+    }
+  ]
+}
+

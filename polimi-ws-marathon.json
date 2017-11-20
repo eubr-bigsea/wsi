@@ -1,0 +1,55 @@
+{
+  "id": "/polimi/polimi-ws",
+  "cmd": null,
+  "cpus": 1,
+  "mem": 999,
+  "disk": 3000,
+  "instances": 1,
+  "healthChecks": [{
+      "protocol": "HTTP",
+      "path": "/",
+      "portIndex": 0,
+      "timeoutSeconds": 30,
+      "gracePeriodSeconds": 30,
+      "intervalSeconds": 2,
+      "maxConsecutiveFailures": 5
+  }],
+  "container": {
+    "docker": {
+      "image": "bsintserver:5000/polimi_wsi",
+      "forcePullImage": true,
+      "network": "BRIDGE",
+      "parameters": [
+        {
+          "key": "env",
+          "value": "DB_PORT=10057"
+        },
+        {
+          "key": "env",
+          "value": "DB_ADDRESS=158.42.104.229"
+        }
+      ],
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "hostPort": 0,
+          "servicePort": 10003,
+          "protocol": "tcp",
+          "name": "10003",
+          "labels": null
+        }
+      ]
+    },
+    "type": "DOCKER"
+  },
+  "labels":{
+    "HAPROXY_GROUP": "external"
+  },
+  "portDefinitions": [
+    {
+      "port": 10003,
+      "protocol": "tcp",
+      "labels": {}
+    }
+  ]
+}
