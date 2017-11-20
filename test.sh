@@ -41,17 +41,15 @@ DOCKER_DB_CONTAINER_NAME=mysql_bigsea
 DOCKER_WS_CONTAINER_NAME=wsi_service
 MYSQL_USER=bigsea
 MYSQL_DATABASE=bigsea
+MYSQL_PASSWORD=${MYSQL_PASSWORD:-b1g534}
 TIMEOUT=30
+WS_IP=${WS_IP:-127.0.0.1}
+DB_IP=${DB_IP:-127.0.0.1}
+WS_PORT=${WS_PORT:-10003}
+DB_PORT=${DB_PORT:-10057}
 
-grep_command="grep DB_pass wsi_config.xml"
-password_line=`docker exec ${DOCKER_WS_CONTAINER_NAME} /bin/bash -c "${grep_command}"`
-user_db_password=`echo $password_line | awk -F\> {'print $2'} | awk -F\< {'print $1'}`
-
-ws_docker_ip=`docker inspect wsi_service |grep \"IPAddress | head -1 | awk '{print $2}' | awk -F'"' '{print $2}'`
-db_docker_ip=`docker inspect mysql_bigsea |grep \"IPAddress | head -1 | awk '{print $2}' | awk -F'"' '{print $2}'`
-
-${dir_script}/clean_DB.sh
-${dir_script}/insert_fake_data.sh
+MYSQL_PASSWORD=${MYSQL_PASSWORD} DB_IP=${DB_IP} DB_PORT=${DB_PORT} ${dir_script}/clean_DB.sh
+MYSQL_PASSWORD=${MYSQL_PASSWORD} DB_IP=${DB_IP} DB_PORT=${DB_PORT} ${dir_script}/insert_fake_data.sh
 
 if test -d test_temp; then
    rm -r test_temp;
@@ -66,7 +64,7 @@ mkdir test_temp
 #                                                                              #
 #                                                                              #
 ################################################################################
-${dir_script}/scripts/update_running_application_test.sh
+WS_IP=${WS_IP} WS_PORT=${WS_PORT} ${dir_script}/scripts/update_running_application_test.sh
 
 
 
@@ -85,15 +83,15 @@ echo "500200" >> test_temp/new_data_example.txt
 echo "10" >> test_temp/new_data_example.txt
 echo "800000" >> test_temp/new_data_example.txt
 echo "1s" >> test_temp/new_data_example.txt
-echo "${user_db_password}" >> test_temp/new_data_example.txt
+echo "${MYSQL_PASSWORD}" >> test_temp/new_data_example.txt
 
 cat ${dir_script}/test_temp/new_data_example.txt | ${dir_script}/insert_new_data.sh
 
 waited_minutes=0
 while :
 do
-   mysql_command="SELECT num_cores_opt FROM OPTIMIZER_CONFIGURATION_TABLE WHERE application_id = \\\"query55\\\" AND dataset_size=1000 and deadline=500300"
-   result=`docker exec ${DOCKER_DB_CONTAINER_NAME} /bin/bash -c "echo \"${mysql_command}\" | mysql -u${MYSQL_USER} -p${user_db_password} ${MYSQL_DATABASE} -N | grep -v password"`
+   mysql_command="SELECT num_cores_opt FROM OPTIMIZER_CONFIGURATION_TABLE WHERE application_id = 'query55' AND dataset_size=1000 and deadline=500300"
+   result=`echo "${mysql_command}" | mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -h ${DB_IP} -P ${DB_PORT} ${MYSQL_DATABASE} -N | grep -v password`
    if [ "$result" == "21" ]; then
       break
    fi
@@ -114,8 +112,8 @@ echo "Found correct value for application_id query55 - dataset 1000 - deadline 5
 waited_minutes=0
 while :
 do
-   mysql_command="SELECT num_cores_opt FROM OPTIMIZER_CONFIGURATION_TABLE WHERE application_id = \\\"query55\\\" AND dataset_size=1000 and deadline=650100"
-   result=`docker exec ${DOCKER_DB_CONTAINER_NAME} /bin/bash -c "echo \"${mysql_command}\" | mysql -u${MYSQL_USER} -p${user_db_password} ${MYSQL_DATABASE} -N | grep -v password"`
+   mysql_command="SELECT num_cores_opt FROM OPTIMIZER_CONFIGURATION_TABLE WHERE application_id = 'query55' AND dataset_size=1000 and deadline=650100"
+   result=`echo "${mysql_command}" | mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -h ${DB_IP} -P ${DB_PORT} ${MYSQL_DATABASE} -N | grep -v password`
    if [ "$result" == "16" ]; then
       break
    fi
@@ -136,8 +134,8 @@ echo "Found correct value for application_id query55 - dataset 1000 - deadline 6
 waited_minutes=0
 while :
 do
-   mysql_command="SELECT num_cores_opt FROM OPTIMIZER_CONFIGURATION_TABLE WHERE application_id = \\\"query55\\\" AND dataset_size=1000 and deadline=799900"
-   result=`docker exec ${DOCKER_DB_CONTAINER_NAME} /bin/bash -c "echo \"${mysql_command}\" | mysql -u${MYSQL_USER} -p${user_db_password} ${MYSQL_DATABASE} -N | grep -v password"`
+   mysql_command="SELECT num_cores_opt FROM OPTIMIZER_CONFIGURATION_TABLE WHERE application_id = 'query55' AND dataset_size=1000 and deadline=799900"
+   result=`echo "${mysql_command}" | mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -h ${DB_IP} -P ${DB_PORT} ${MYSQL_DATABASE} -N | grep -v password`
    if [ "$result" == "13" ]; then
       break
    fi
@@ -165,36 +163,35 @@ echo "Found correct value for application_id query55 - dataset 1000 - deadline 7
 #                                                                              #
 ################################################################################
 
-docker cp ${DOCKER_WS_CONTAINER_NAME}:/tarball/WS_DagSim/ExampleScripts/call_R_dagsim.sh ${dir_script}/test_temp
-docker cp ${DOCKER_WS_CONTAINER_NAME}:/tarball/WS_DagSim/ExampleScripts/call_S_dagsim.sh ${dir_script}/test_temp
-docker cp ${DOCKER_WS_CONTAINER_NAME}:/tarball/WS_DagSim/ExampleScripts/call_dagsim.sh ${dir_script}/test_temp
-docker cp ${DOCKER_WS_CONTAINER_NAME}:/tarball/WS_DagSim/ExampleScripts/call_dagsim_stage.sh ${dir_script}/test_temp
-docker cp ${DOCKER_WS_CONTAINER_NAME}:/tarball/WS_DagSim/ExampleScripts/call_opt_ic.sh ${dir_script}/test_temp
-docker cp ${DOCKER_WS_CONTAINER_NAME}:/tarball/WS_DagSim/ExampleScripts/call_opt_ic_stage.sh ${dir_script}/test_temp
-sed -i "s/localhost/${ws_docker_ip}/g" ${dir_script}/test_temp/*
-chmod a+x ${dir_script}/test_temp/*
+wget https://raw.githubusercontent.com/eubr-bigsea/WS_DagSim/master/ExampleScripts/call_R_dagsim.sh -P test_temp
+wget https://raw.githubusercontent.com/eubr-bigsea/WS_DagSim/master/ExampleScripts/call_S_dagsim.sh -P test_temp
+wget https://raw.githubusercontent.com/eubr-bigsea/WS_DagSim/master/ExampleScripts/call_dagsim.sh -P test_temp
+wget https://raw.githubusercontent.com/eubr-bigsea/WS_DagSim/master/ExampleScripts/call_dagsim_stage.sh -P test_temp
+wget https://raw.githubusercontent.com/eubr-bigsea/WS_DagSim/master/ExampleScripts/call_opt_ic.sh -P test_temp
+wget https://raw.githubusercontent.com/eubr-bigsea/WS_DagSim/master/ExampleScripts/call_opt_ic_stage.sh -P test_temp
+chmod a+x test_temp/*
 
-result=`${dir_script}/test_temp/call_R_dagsim.sh`
+result=`WS_PORT=${WS_PORT} test_temp/call_R_dagsim.sh`
 echo "Result of call_R_dagsim is $result"
 golden_result="597405"
 compare_result || exit $?
 
-result=`${dir_script}/test_temp/call_S_dagsim.sh`
+result=`WS_PORT=${WS_PORT} test_temp/call_S_dagsim.sh`
 echo "Result of call_S_dagsim is $result"
 golden_result="444221"
 compare_result || exit $?
 
-result=`${dir_script}/test_temp/call_dagsim.sh`
+result=`WS_PORT=${WS_PORT} test_temp/call_dagsim.sh`
 echo "Result of call_dagsim is $result"
 golden_result="444221"
 compare_result || exit $?
 
-result=`${dir_script}/test_temp/call_dagsim_stage.sh`
+result=`WS_PORT=${WS_PORT} test_temp/call_dagsim_stage.sh`
 echo "Result of call_dagsim_stage is $result"
 golden_result="3213 43349"
 compare_result || exit $?
 
-result=`${dir_script}/test_temp/call_opt_ic.sh`
+result=`WS_PORT=${WS_PORT} test_temp/call_opt_ic.sh`
 echo "Result of call_opt_ic.sh is $result"
 golden_result="36 5"
 compare_result || exit $?
@@ -202,8 +199,8 @@ compare_result || exit $?
 waited_minutes=0
 while :
 do
-   mysql_command="SELECT num_cores_opt FROM OPTIMIZER_CONFIGURATION_TABLE WHERE application_id = \\\"query26\\\" AND dataset_size=1000 and deadline=400000"
-   result=`docker exec ${DOCKER_DB_CONTAINER_NAME} /bin/bash -c "echo \"${mysql_command}\" | mysql -u${MYSQL_USER} -p${user_db_password} ${MYSQL_DATABASE} -N | grep -v password"`
+   mysql_command="SELECT num_cores_opt FROM OPTIMIZER_CONFIGURATION_TABLE WHERE application_id = 'query26' AND dataset_size=1000 and deadline=400000"
+   result=`echo "${mysql_command}" | mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -h ${DB_IP} -P ${DB_PORT} ${MYSQL_DATABASE} -N | grep -v password`
    if [ "$result" == "36" ]; then
       break
    fi
@@ -217,7 +214,7 @@ do
 done
 echo "Found correct value for application_id query26 - dataset 1000 - deadline 400000: 36"
 
-result=`${dir_script}/test_temp/call_opt_ic_stage.sh`
+result=`WS_PORT=${WS_PORT} test_temp/call_opt_ic_stage.sh`
 echo "Result of call_opt_ic_stage.sh is $result"
 golden_result="4 1 1686000"
 compare_result || exit $?
@@ -233,13 +230,11 @@ compare_result || exit $?
 #                                                                              #
 ################################################################################
 
-docker cp ${DOCKER_WS_CONTAINER_NAME}:/tarball/opt_jr/test_opt_jr.sh ${dir_script}/test_temp
-sed -i "s/localhost/${ws_docker_ip}/g" ${dir_script}/test_temp/test_opt_jr.sh
-chmod a+x ${dir_script}/test_temp/test_opt_jr.sh
-docker cp ${DOCKER_WS_CONTAINER_NAME}:/tarball/opt_jr/execute.sh ${dir_script}/test_temp
-chmod a+x ${dir_script}/test_temp/execute.sh
-docker cp ${DOCKER_WS_CONTAINER_NAME}:/home/wsi/wsi_config.xml ${dir_script}/test_temp
-result=`FILE=${dir_script}/test_temp/wsi_config.xml DB_IP=${db_docker_ip} WSI_IP=${ws_docker_ip} ${dir_script}/test_temp/test_opt_jr.sh | tail -4`
+wget https://raw.githubusercontent.com/eubr-bigsea/opt_jr/master/test_opt_jr.sh -P test_temp
+chmod ugo+x test_temp/test_opt_jr.sh
+wget https://raw.githubusercontent.com/eubr-bigsea/opt_jr/master/execute.sh -P test_temp
+chmod ugo+x test_temp/execute.sh
+result=`DB_IP=${DB_IP} WS_IP=${WS_IP} WS_PORT=${WS_PORT} DB_PORT=${DB_PORT} test_temp/test_opt_jr.sh | tail -4`
 result=`echo $result`
 echo "Result of opt_jr is ${result}"
 golden_result="68 30 22 30"

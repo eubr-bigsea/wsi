@@ -10,35 +10,28 @@ SCRIPT_FILE_1=/insertFakeProfile.sql
 SCRIPT_FILE_2=/insertFakeData.sql
 SCRIPT_FILE_3=/PREDICTOR_CACHE_TABLE.sql
 SCRIPT_FILE_4=/OPTIMIZER_CONFIGURATION_TABLE.sql
+
+DB_IP=${DB_IP:-127.0.0.1}
 MYSQL_USER=bigsea
-DOCKER_DB_CONTAINER_NAME=mysql_bigsea
-DOCKER_WS_CONTAINER_NAME=wsi_service
-DOCKER_MYSQL_PORT=3306
+DB_PORT=${DB_PORT:-3306}
 MYSQL_DATABASE=bigsea
+MYSQL_PASSWORD=${MYSQL_PASSWORD:-b1g534}
 
-echo "Insertion Fake Data into Docker container: ${DOCKER_DB_CONTAINER_NAME}"
-grep_command="grep DB_pass wsi_config.xml"
-password_line=`docker exec ${DOCKER_WS_CONTAINER_NAME} /bin/bash -c "${grep_command}"`
-user_db_password=`echo $password_line | awk -F\> {'print $2'} | awk -F\< {'print $1'}`
+if test -d insert_temp; then
+   rm -r insert_temp;
+fi
+mkdir insert_temp
 
+mysql -u ${MYSQL_USER} -p${MYSQL_PASSWORD} -h ${DB_IP} -P ${DB_PORT} ${MYSQL_DATABASE} < ${dir_script}/Database/insertFakeProfile.sql
 
-#Inserting data for OPT_IC
-docker cp ${dir_script}/Database/insertFakeProfile.sql ${DOCKER_DB_CONTAINER_NAME}:${SCRIPT_FILE_1}
-docker exec ${DOCKER_DB_CONTAINER_NAME} bin/bash -c "mysql -u${MYSQL_USER} -p${user_db_password} ${MYSQL_DATABASE} < ${SCRIPT_FILE_1}";
-docker cp ${dir_script}/Database/insertFakeData.sql ${DOCKER_DB_CONTAINER_NAME}:${SCRIPT_FILE_2}
-docker exec ${DOCKER_DB_CONTAINER_NAME} bin/bash -c "mysql -u${MYSQL_USER} -p${user_db_password} ${MYSQL_DATABASE} < ${SCRIPT_FILE_2}";
+mysql -u ${MYSQL_USER} -p${MYSQL_PASSWORD} -h ${DB_IP} -P ${DB_PORT} ${MYSQL_DATABASE} < ${dir_script}/Database/insertFakeData.sql
+
 echo "Inserted data for OPT_IC"
 
-#Inserting data for OPT_JR
-docker cp ${DOCKER_WS_CONTAINER_NAME}:/tarball/opt_jr/PREDICTOR_CACHE_TABLE.sql PREDICTOR_CACHE_TABLE.sql
-docker cp PREDICTOR_CACHE_TABLE.sql ${DOCKER_DB_CONTAINER_NAME}:${SCRIPT_FILE_3}
-rm PREDICTOR_CACHE_TABLE.sql
-docker exec ${DOCKER_DB_CONTAINER_NAME} bin/bash -c "mysql -u${MYSQL_USER} -p${user_db_password} ${MYSQL_DATABASE} < ${SCRIPT_FILE_3}";
+wget https://raw.githubusercontent.com/eubr-bigsea/opt_jr/master/PREDICTOR_CACHE_TABLE.sql -P insert_temp
+mysql -u ${MYSQL_USER} -p${MYSQL_PASSWORD} -h ${DB_IP} -P ${DB_PORT} ${MYSQL_DATABASE} < insert_temp/PREDICTOR_CACHE_TABLE.sql
 
+wget https://raw.githubusercontent.com/eubr-bigsea/opt_jr/master/OPTIMIZER_CONFIGURATION_TABLE.sql -P insert_temp
+mysql -u ${MYSQL_USER} -p${MYSQL_PASSWORD} -h ${DB_IP} -P ${DB_PORT} ${MYSQL_DATABASE} < insert_temp/OPTIMIZER_CONFIGURATION_TABLE.sql
 
-docker cp ${DOCKER_WS_CONTAINER_NAME}:/tarball/opt_jr/OPTIMIZER_CONFIGURATION_TABLE.sql OPTIMIZER_CONFIGURATION_TABLE.sql
-docker cp OPTIMIZER_CONFIGURATION_TABLE.sql ${DOCKER_DB_CONTAINER_NAME}:${SCRIPT_FILE_4}
-rm OPTIMIZER_CONFIGURATION_TABLE.sql
-docker exec ${DOCKER_DB_CONTAINER_NAME} bin/bash -c "mysql -u${MYSQL_USER} -p${user_db_password} ${MYSQL_DATABASE} < ${SCRIPT_FILE_4}";
 echo "Inserted data for OPT_JR"
-echo "Done"

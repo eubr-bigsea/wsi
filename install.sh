@@ -19,13 +19,14 @@ SCRIPT_CREATE_DB=${DATABASE_HOME}/startNewDockerContainer.sh
 MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-b1g534}
 MYSQL_USER=${MYSQL_USER:-bigsea}
 MYSQL_PASSWORD=${MYSQL_PASSWORD:-b1g534}
-WSI_SERVICE_PORT=${WSI_SERVICE_PORT:-8080}
+WS_PORT=${WS_PORT:-10003}
+DOCKER_MYSQL_PORT=${DOCKER_MYSQL_PORT:-10057}
 
 DIR_TEMP=ws_docker_temp
 
 function create_database {
 
-    MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD} MYSQL_USER=${MYSQL_USER} MYSQL_PASSWORD=${MYSQL_PASSWORD} ${SCRIPT_CREATE_DB}
+    MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD} MYSQL_USER=${MYSQL_USER} MYSQL_PASSWORD=${MYSQL_PASSWORD} DOCKER_MYSQL_PORT=${DOCKER_MYSQL_PORT} ${SCRIPT_CREATE_DB}
 
     return 0
 }
@@ -64,12 +65,12 @@ function build_services {
     cp ${WSI_HOME}/docker/Dockerfile ${DIR_TEMP}/Dockerfile
 
     echo "Build docker image for services..."
-    docker build --no-cache --force-rm -t wsi ${DIR_TEMP}
+    docker build --no-cache --rm -t wsi ${DIR_TEMP}
     echo "Delete temporary directory"
     rm -rf ws_docker_temp
     echo "Launch container"
     # TODO
-    docker run --name wsi_service -d -p ${WSI_SERVICE_PORT}:8080 wsi
+    docker run -e "DB_PORT=${DOCKER_MYSQL_PORT}" --name wsi_service -d -p ${WS_PORT}:8080 wsi
     return 0
 }
 

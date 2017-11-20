@@ -154,10 +154,14 @@ RUN mkdir -p ${EXAMPLE_DATA_HOME} && \
 # Copy Configuration file
 COPY wsi_config.xml ${WSI_CONFIG_FILE}
 RUN chown ${WSI_USER}:${WSI_USER} ${WSI_CONFIG_FILE}
+RUN chmod ugo+x /tarball/wsi/scripts/update_wsi_config.sh
 
 # Go on user
 USER ${WSI_USER}
 WORKDIR ${WSI_HOME}
+
+# Update wsi_config.xml
+RUN /tarball/wsi/scripts/update_wsi_config.sh
 
 # Create directory for upload
 RUN mkdir ${WSI_HOME}/Uploaded
@@ -169,5 +173,5 @@ RUN cd ${EXAMPLE_DATA_HOME} && \
 EXPOSE 8080
 
 # Default command launch tomcat
-CMD ["catalina.sh", "run"]
+CMD ["/bin/bash", "-c", "/tarball/wsi/scripts/update_wsi_config.sh && catalina.sh run;"]
 
