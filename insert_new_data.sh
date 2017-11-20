@@ -1,13 +1,13 @@
 #!/bin/bash
 MYSQL_USER=bigsea
-DOCKER_DB_CONTAINER_NAME=mysql_bigsea
-DOCKER_WS_CONTAINER_NAME=wsi_service
-DOCKER_MYSQL_PORT=3306
 MYSQL_DATABASE=bigsea
 
 grep_command="grep DB_pass wsi_config.xml"
-password_line=`docker exec ${DOCKER_WS_CONTAINER_NAME} /bin/bash -c "${grep_command}"`
-user_db_password=`echo $password_line | awk -F\> {'print $2'} | awk -F\< {'print $1'}`
+MYSQL_PASSWORD=${MYSQL_PASSWORD:-b1g534}
+WS_IP=${WS_IP:-127.0.0.1}
+DB_IP=${DB_IP:-127.0.0.1}
+WS_PORT=${WS_PORT:-10003}
+DB_PORT=${DB_PORT:-10057}
 
 echo "Initialize application data"
 echo -n "Application ID: "
@@ -41,9 +41,8 @@ echo "INSERT INTO \`OPTIMIZER_CONFIGURATION_TABLE\` ( \
    VALUES (\"${application_ID}\", ${dataset_size}, ${execution_time_first_configuration}, ${number_of_cores_first_configuration}, 0), \
    (\"${application_ID}\", ${dataset_size}, ${execution_time_second_configuration}, ${number_of_cores_second_configuration}, 0);" > temp_sql_command.sql
 
-docker cp temp_sql_command.sql  ${DOCKER_DB_CONTAINER_NAME}:/tmp
 
-docker exec ${DOCKER_DB_CONTAINER_NAME} /bin/bash -c "mysql -u${MYSQL_USER} -p${user_db_password} ${MYSQL_DATABASE} < /tmp/temp_sql_command.sql";
+mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -h${DB_IP} -P${DB_PORT} ${MYSQL_DATABASE} < temp_sql_command.sql
 rm temp_sql_command.sql
 
 first_deadline=$((execution_time_first_configuration + 100))
@@ -57,14 +56,14 @@ echo "First evaluated deadline is ${first_deadline}"
 echo "Second evaluated deadline is ${second_deadline}"
 echo "Third evaluated deadline is ${third_deadline}"
 
-docker exec ${DOCKER_WS_CONTAINER_NAME} /bin/bash -c "curl http://localhost:8080/bigsea/rest/ws/resopt/${application_ID}/${dataset_size}/${first_deadline}"
-docker exec ${DOCKER_WS_CONTAINER_NAME} /bin/bash -c "curl http://localhost:8080/bigsea/rest/ws/resopt/${application_ID}/${dataset_size}/${second_deadline}"
-docker exec ${DOCKER_WS_CONTAINER_NAME} /bin/bash -c "curl http://localhost:8080/bigsea/rest/ws/resopt/${application_ID}/${dataset_size}/${third_deadline}"
+curl http://${WS_IP}:${WS_PORT}/bigsea/rest/ws/resopt/${application_ID}/${dataset_size}/${first_deadline}
+curl http://${WS_IP}:${WS_PORT}/bigsea/rest/ws/resopt/${application_ID}/${dataset_size}/${second_deadline}
+curl http://${WS_IP}:${WS_PORT}/bigsea/rest/ws/resopt/${application_ID}/${dataset_size}/${third_deadline}
 
 sleep ${sleep_time}
 
-mysql_command="DELETE FROM OPTIMIZER_CONFIGURATION_TABLE where application_id = \\\"${application_ID}\\\" AND dataset_size = ${dataset_size} AND deadline = ${execution_time_first_configuration};"
-docker exec ${DOCKER_DB_CONTAINER_NAME} /bin/bash -c "echo \"${mysql_command}\" | mysql -u${MYSQL_USER} -p${user_db_password} ${MYSQL_DATABASE}";
-mysql_command="DELETE FROM OPTIMIZER_CONFIGURATION_TABLE where application_id = \\\"${application_ID}\\\" AND dataset_size = ${dataset_size} AND deadline = ${execution_time_second_configuration};"
-docker exec ${DOCKER_DB_CONTAINER_NAME} /bin/bash -c "echo \"${mysql_command}\" | mysql -u${MYSQL_USER} -p${user_db_password} ${MYSQL_DATABASE}";
-
+mysql_command="DELETE FROM OPTIMIZER_CONFIGURATION_TABLE where application_id = \"${application_ID}\" AND dataset_size = ${dataset_size} AND deadline = ${execution_time_first_configuration};"
+echo ${mysql_command} | mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -h${DB_IP} -P${DB_PORT} ${MYSQL_DATABASE}
+mysql_command="DELETE FROM OPTIMIZER_CONFIGURATION_TABLE where application_id = \"${application_ID}\" AND dataset_size = ${dataset_size} AND deadline = ${execution_time_second_configuration};"
+echo ${mysql_command} | mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -h${DB_IP} -P${DB_PORT} ${MYSQL_DATABASE}
+echo "Finished insertion of new data"
