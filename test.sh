@@ -171,27 +171,27 @@ wget https://raw.githubusercontent.com/eubr-bigsea/WS_DagSim/master/ExampleScrip
 wget https://raw.githubusercontent.com/eubr-bigsea/WS_DagSim/master/ExampleScripts/call_opt_ic_stage.sh -P test_temp
 chmod a+x test_temp/*
 
-result=`WS_PORT=${WS_PORT} test_temp/call_R_dagsim.sh`
+result=`WS_PORT=${WS_PORT} test_temp/call_R_dagsim.sh` || exit $?
 echo "Result of call_R_dagsim is $result"
 golden_result="597405"
 compare_result || exit $?
 
-result=`WS_PORT=${WS_PORT} test_temp/call_S_dagsim.sh`
+result=`WS_PORT=${WS_PORT} test_temp/call_S_dagsim.sh` || exit $?
 echo "Result of call_S_dagsim is $result"
 golden_result="444221"
 compare_result || exit $?
 
-result=`WS_PORT=${WS_PORT} test_temp/call_dagsim.sh`
+result=`WS_PORT=${WS_PORT} test_temp/call_dagsim.sh` || exit $?
 echo "Result of call_dagsim is $result"
 golden_result="444221"
 compare_result || exit $?
 
-result=`WS_PORT=${WS_PORT} test_temp/call_dagsim_stage.sh`
+result=`WS_PORT=${WS_PORT} test_temp/call_dagsim_stage.sh` || exit $?
 echo "Result of call_dagsim_stage is $result"
 golden_result="3213 43349"
 compare_result || exit $?
 
-result=`WS_PORT=${WS_PORT} test_temp/call_opt_ic.sh`
+result=`WS_PORT=${WS_PORT} test_temp/call_opt_ic.sh` || exit $?
 echo "Result of call_opt_ic.sh is $result"
 golden_result="36 5"
 compare_result || exit $?
