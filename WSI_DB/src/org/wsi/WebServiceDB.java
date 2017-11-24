@@ -196,6 +196,6 @@ public class WebServiceDB {
 			e.printStackTrace();
 		}
 
-		return("Error: variable not found in wsi_cnfig.xml file");
+		return("Error: variable " + variable + " not found in wsi_config.xml file");
 	}
 }
