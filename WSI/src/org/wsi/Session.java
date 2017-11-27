@@ -95,10 +95,10 @@ public class Session {
 					+ params.getWeight() + ","
 					+ queryResult.chi_0 + ","
 					+ queryResult.chi_c + ","
-					+ queryResult.vir_memory + ","
 					+ queryResult.phi_memory + ","
-					+ queryResult.vir_core + ","
+					+ queryResult.vir_memory + ","
 					+ queryResult.phi_core + ","
+					+ queryResult.vir_core + ","
 					+ params.getDeadline() + ","
 					+ params.getStageID() + ","
 					+ queryResult.dataset_size;
