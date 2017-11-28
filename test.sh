@@ -237,7 +237,7 @@ chmod ugo+x test_temp/execute.sh
 result=`DB_IP=${DB_IP} WS_IP=${WS_IP} WS_PORT=${WS_PORT} DB_PORT=${DB_PORT} test_temp/test_opt_jr.sh | tail -4`
 result=`echo $result`
 echo "Result of opt_jr is ${result}"
-golden_result="68 30 22 30"
+golden_result="64 32 24 28"
 compare_result || exit $?
 
 exit 0
