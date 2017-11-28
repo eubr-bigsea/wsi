@@ -12,3 +12,4 @@ ENV MYSQL_USER ${MYSQL_USER_ARG}
 ENV MYSQL_PASSWORD ${MYSQL_PASSWORD_ARG}
 
 ADD creationDB.sql /docker-entrypoint-initdb.d/
+ADD insertBulmaProfile.sql /docker-entrypoint-initdb.d/
