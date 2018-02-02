@@ -3,7 +3,7 @@
 <properties>
 <comment/>
 <entry key="RESOPT_HOME">/opt/OPT_IC</entry>
-<entry key="RESULTS_HOME">/home/work/LogP8</entry>
+<entry key="RESULTS_HOME">/home/work/LogBS</entry>
 <entry key="DB_port">3306</entry>
 <entry key="DAGSIM_HOME">/opt/dagSim</entry>
 <entry key="LUNDSTROM_HOME">/opt/lundstrom</entry>

@@ -50,6 +50,7 @@ DB_PORT=${DB_PORT:-10057}
 
 MYSQL_PASSWORD=${MYSQL_PASSWORD} DB_IP=${DB_IP} DB_PORT=${DB_PORT} ${dir_script}/clean_DB.sh
 MYSQL_PASSWORD=${MYSQL_PASSWORD} DB_IP=${DB_IP} DB_PORT=${DB_PORT} ${dir_script}/insert_fake_data.sh
+MYSQL_PASSWORD=${MYSQL_PASSWORD} DB_IP=${DB_IP} DB_PORT=${DB_PORT} ${dir_script}/insert_bulma_data.sh
 
 if test -d test_temp; then
    rm -r test_temp;
