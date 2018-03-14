@@ -169,7 +169,8 @@ RUN mkdir ${WSI_HOME}/Uploaded
 # Copy example datas
 RUN cd ${EXAMPLE_DATA_HOME} && \
     tar -zxvf /tarball/OPT_DATA_CONFIG/LogP8.tar.gz && \
-    cp -r /tarball/OPT_DATA_CONFIG/LogBS . || :
+    cp -r /tarball/OPT_DATA_CONFIG/LogBS . && \
+    cp -r /tarball/OPT_DATA_CONFIG/LogBR .
 
 EXPOSE 8080
 
